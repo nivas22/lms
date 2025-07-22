@@ -141,7 +141,7 @@ app.post("/send-email", (req, response) => {
     <button class="button">
     <a class="link" noreferrer target='_blank' noopener href=${
       process.env.NODE_ENV === "production"
-        ? "https://academix-1.onrender.com/"
+        ? "https://mentoriq-1.onrender.com/"
         : "http://localhost:3000"
     }>Visit Our Website</a>
     </button>
@@ -181,7 +181,7 @@ app.post("/send-email", (req, response) => {
   });
 
   const mailOptions = {
-    from: '"Fanuel Amare from AcademiX "<fanu7.dev@gmail.com>',
+    from: '"Fanuel Amare from MentorIQ "<fanu7.dev@gmail.com>',
     to: to,
     subject: subject,
     text: isHtml ? "" : text,

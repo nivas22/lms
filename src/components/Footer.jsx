@@ -15,7 +15,7 @@ const Footer = ({ mt }) => {
         style={{ marginTop: mt ? mt : "0", minHeight: "15rem" }}
       >
         <div className="col-sm-6 col-md-3 p-3 d-flex flex-column justify-content-center justify-content-sm-left align-items-center align-items-sm-start">
-          <h4>Academix</h4>
+          <h4>MentorIQ</h4>
           <p>Learning Management Platform</p>
           <p className="fw-bold">Follow Us</p>
           <div
