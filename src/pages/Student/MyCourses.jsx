@@ -23,29 +23,35 @@ const MyCourses = () => {
       dataIndex: "id",
     },
     {
-      title: "Registered in",
+      title: "Subscribed in",
       render(item) {
-        const courseReg = courseRegs.filter((cr) => cr.course == item._id)[0];
-        return courseReg.createdAt.split("T")[0];
+        const courseReg = courseRegs && courseRegs.filter((cr) => cr.course == item._id)[0];
+
+        return courseReg ? courseReg.createdAt.split("T")[0] : "";
       },
     },
     {
       title: "My Status",
       render(item) {
-        const courseReg = courseRegs.filter((cr) => cr.course == item._id)[0];
-        const { createdAt, updatedAt } = courseReg;
-        const timeLapse =
-          new Date(updatedAt).getDate() - new Date(createdAt).getDate();
-        return `${courseReg.status} ${
-          courseReg.status == "finished"
-            ? "( in " +
-              timeLapse +
-              " " +
-              (timeLapse > 1 ? "days" : "day ") +
-              ")"
+        const courseReg =
+          courseRegs && courseRegs.find((cr) => cr.course === item._id);
+
+        if (!courseReg || !courseReg.createdAt || !courseReg.updatedAt) {
+          return ""; // or return something like "Not Registered"
+        }
+
+        const createdAt = new Date(courseReg.createdAt);
+        const updated = new Date(courseReg.updatedAt);
+
+        const timeLapse = Math.ceil((updated - createdAt) / (1000 * 60 * 60 * 24)); // difference in days
+
+        return `${courseReg.status}${
+          courseReg.status === "finished"
+            ? ` (in ${timeLapse} ${timeLapse > 1 ? "days" : "day"})`
             : ""
         }`;
-      },
+      }
+
     },
     {
       title: "Total Lessons",
@@ -59,21 +65,24 @@ const MyCourses = () => {
     {
       title: "Actions",
       render(item) {
-        const courseReg =
-          courseRegs && courseRegs.filter((cr) => cr.course == item._id)[0];
-        return (
-          courseReg.status == "registered" && (
-            <Popconfirm
-              title="Finish this course ?"
-              onConfirm={() => {
-                updateCourseReg(courseReg, "finished");
-              }}
-            >
-              <Button type="primary">Finish</Button>
-            </Popconfirm>
-          )
-        );
-      },
+  const courseReg =
+    courseRegs?.find((cr) => cr.course === item._id);
+
+  if (!courseReg || courseReg.status !== "registered") {
+    return null; // don't render anything if not registered or not found
+  }
+
+  return (
+    <Popconfirm
+      title="Finish this course?"
+      onConfirm={() => {
+        updateCourseReg(courseReg, "finished");
+      }}
+    >
+      <Button type="primary">Finish</Button>
+    </Popconfirm>
+  );
+},
     },
   ];
 

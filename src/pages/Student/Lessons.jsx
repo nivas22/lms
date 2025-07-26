@@ -3,6 +3,7 @@ import AntdTable from "../../components/AntdTable";
 import { useEffect, useState } from "react";
 import { Button, Input, Modal, Select } from "antd";
 import API_URL from "../../apiUrl";
+import { use } from "react";
 
 const Lessons = () => {
   const apiUrl = API_URL;
@@ -67,6 +68,7 @@ const Lessons = () => {
           <div className="d-flex">
             <Button
               onClick={() => {
+                console.log("View Lesson", item);
                 setSelectedLesson(item);
                 setShowViewModal(true);
               }}
@@ -77,6 +79,7 @@ const Lessons = () => {
             <Button
               className="ms-2"
               onClick={() => {
+                console.log("View Lesson", item);
                 setSelectedLesson(item);
                 setShowViewExamModal(true);
               }}
@@ -144,10 +147,17 @@ const Lessons = () => {
     setFilteredLessons(filtered);
   };
 
+  console.log("my exams-----", myExams);
+
   useEffect(() => {
     if (!filterCondition) setFilteredLessons(myLessons);
     else filterData();
   }, [filterCondition]);
+
+  // useEffect(() => {
+  //   const currentExams = myExams.filter((exam) => exam.lesson == selectedLesson._id);
+  //   setCurrentExams(currentExams.length > 0 ? currentExams[0] : null);
+  // }, [selectedLesson]);
 
   return (
     <div className="w-100">

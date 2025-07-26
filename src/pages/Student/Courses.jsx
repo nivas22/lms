@@ -36,12 +36,12 @@ const Courses = () => {
             <small className="text-success">Registered</small>
           ) : (
             <Popconfirm
-              title="Register for course ?"
+              title="Subscribe for course ?"
               onConfirm={() => {
                 registerForCourse(item);
               }}
             >
-              <Button type="primary">Register</Button>
+              <Button type="primary">Subscribe</Button>
             </Popconfirm>
           )
         ) : (
@@ -77,7 +77,7 @@ const Courses = () => {
       .then((res) => res.json())
       .then((res) => {
         if (res && res.result) {
-          message.success("Successfully Registered For Course !");
+          message.success("Successfully subscribed For Course !");
           setTimeout(() => {
             getCourseRegs();
           }, 500);

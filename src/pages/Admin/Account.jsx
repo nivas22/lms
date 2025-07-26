@@ -43,7 +43,7 @@ const Account = () => {
     email: "",
     password: "",
     cpassword: "",
-    grade: "9",
+    grade: "1",
     role: "student",
     department: "",
   });

@@ -317,6 +317,17 @@ app.get("/delete-department/:id", (req, response) => {
     });
 });
 
+app.get("/delete-lesson/:id", (req, response) => {
+  const id = req.params.id;
+  Lesson.findByIdAndDelete(id)
+    .then((res) => {
+      response.json({ result: res });
+    })
+    .catch((err) => {
+      response.json({ error: true });
+    });
+});
+
 app.post("/filterDeptByName", (req, response) => {
   const { name } = req.body;
   Department.find({ title: name })

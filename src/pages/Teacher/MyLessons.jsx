@@ -1,6 +1,10 @@
 import { Button, Input, Modal, Select, message } from "antd";
 import AntdTable from "../../components/AntdTable";
 import { useEffect, useState } from "react";
+import { fetcher } from "../../_services";
+import { useDispatch } from "react-redux";
+import { setLessons } from "../../store/store";
+
 import {
   DeleteOutlined,
   PlusCircleFilled,
@@ -11,6 +15,7 @@ import API_URL from "../../apiUrl";
 
 const MyLessons = () => {
   const apiUrl = API_URL;
+  const dispatch = useDispatch();
 
   const columns = [
     {
@@ -57,17 +62,41 @@ const MyLessons = () => {
               }}
               className="bg-success text-white"
             >
-              View Lesson
+              View
             </Button>
+
+            {/* <Button
+              className="ms-2 bg-danger text-white"
+              onClick={() => {
+                setShowViewExamModal(true);
+                deleteLesson(item);
+              }}
+            >
+              Delete
+            </Button> */}
+            
             <Button
+            className="ms-2"
+            onClick={() => {
+              setShowViewExamModal(true);
+                setSelectedLesson(item);
+            }}
+            type="bg-warning text-black"
+            icon={<PlusCircleFilled />}
+          >
+            Question
+          </Button>
+
+            {/* <Button
               className="ms-2"
               onClick={() => {
                 setShowViewExamModal(true);
                 setSelectedLesson(item);
               }}
             >
-              Exams & Questions
-            </Button>
+              Question
+            </Button> */}
+            
           </>
         );
       },
@@ -165,11 +194,44 @@ const MyLessons = () => {
       .then((res) => res.json())
       .then((res) => {
         setNewLesson({});
-        showAddModal(false);
+        setShowAddModal(false);
       })
       .catch((err) => {
         console.log("error", err);
         setError(true);
+      });
+  };
+
+
+
+  const getLessons = async () => {
+      await fetcher("get-lessons").then((res) => {
+        const less = res.result;
+        const myLessons = [];
+        console.log("My Lessons", less);
+        less.map((dept) => myLessons.push({ name: dept.title, value: dept._id }));
+        dispatch(setLessons(myLessons));
+        setFilteredLessons(myLessons);
+      });
+    };
+
+
+
+  const deleteLesson = (item) => {
+    console.log("Deleting lesson", item);
+    if (!item || !item._id) {
+      message.error("Invalid lesson data!");
+      return;
+    }
+
+    fetch(`${apiUrl}/delete-lesson/${item._id}`)
+      .then((res) => res.json())
+      .then((res) => {
+        message.success("My Lesson Successfully Deleted!");
+        getLessons();
+      })
+      .catch((err) => {
+        message.error("Some Error Occrred!");
       });
   };
 
@@ -189,7 +251,7 @@ const MyLessons = () => {
       .then((res) => res.json())
       .then((res) => {
         setNewExam({});
-        showAddExamModal(false);
+        setShowAddExamModal(false);
       })
       .catch((err) => {
         console.log("error", err);
@@ -375,7 +437,7 @@ const MyLessons = () => {
       <Modal
         open={showViewModal}
         maskClosable={false}
-        title="View Lesson"
+        title="View"
         onCancel={() => {
           setShowViewModal(false);
         }}
