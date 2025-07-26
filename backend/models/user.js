@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema(
     },
     grade: { type: String, required: false },
     account_status: { type: String, required: true, default: "not-approved" },
-    school: { type: String, required: false, default: "AcademiX" },
+    school: { type: String, required: false, default: "MentorIQ" },
   },
   { collection: "User" }
 );

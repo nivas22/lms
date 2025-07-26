@@ -15,7 +15,7 @@ const Signup = () => {
     email: "",
     password: "",
     cpassword: "",
-    grade: "9",
+    grade: "1",
     role: "student",
     department: "",
   });
@@ -40,8 +40,10 @@ const Signup = () => {
   ];
 
   const grades = [
-    { name: "9", value: "nine" },
-    { name: "10", value: "ten" },
+    { name: "1", value: "one" },
+    { name: "2", value: "two" },
+    { name: "3", value: "three" },
+    { name: "4", value: "four" }
   ];
 
   const getDepartments = () => {
@@ -267,7 +269,7 @@ const Signup = () => {
         <small className="mt-2">
           Already have an{" "}
           <a className="text-blue text-decoration-none" href="/#">
-            AcademiX
+            MentorIQ
           </a>{" "}
           account?
         </small>

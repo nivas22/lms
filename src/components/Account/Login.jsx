@@ -171,7 +171,7 @@ const Login = () => {
         <small className="mt-2">
           Don't have an{" "}
           <a className="text-blue text-decoration-none" href="/#">
-            AcademiX
+            MentorIQ
           </a>{" "}
           account?
         </small>

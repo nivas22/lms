@@ -8,7 +8,7 @@ const AccountLayout = () => {
         style={{ width: "15%", height: "3rem" }}
         className="mb-2 mt-1 mx-auto d-flex justify-content-center align-items-center"
       >
-        <HomeFilled />&nbsp;<a href="/" className="m-0 text-decoration-none">AcademiX</a>
+        <HomeFilled />&nbsp;<a href="/" className="m-0 text-decoration-none">MentorIQ</a>
       </div>
       <Outlet />
     </div>

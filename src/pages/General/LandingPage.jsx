@@ -37,7 +37,7 @@ const LandingPage = () => {
             alt="logo"
             style={{ width: "1.2rem", height: "1.2rem", objectFit: "cover" }}
           />
-          <p className="m-0 ms-2">AcademiX</p>
+          <p className="m-0 ms-2">MentorIQ</p>
         </a>
         <button
           className="navbar-toggler"
