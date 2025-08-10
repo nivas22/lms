@@ -1,13 +1,12 @@
-import { Input, Button, Select } from "antd";
-import { Link } from "react-router-dom";
+import { Input, Button, Select, Tooltip } from "antd";
+import { Link, useNavigate } from "react-router-dom";
 import Footer from "../Footer";
 import { useEffect, useState } from "react";
 import { validateEmail, matchValues, fetcher } from "../../_services";
-import { useNavigate } from "react-router-dom";
 import API_URL from "../../apiUrl";
+
 const Signup = () => {
   const navigate = useNavigate();
-
   const apiUrl = API_URL;
 
   const [input, setInput] = useState({
@@ -32,6 +31,13 @@ const Signup = () => {
     },
   });
 
+  // Store actual error messages per field
+  const [errorMessages, setErrorMessages] = useState({
+    email: "",
+    password: "",
+    cpassword: "",
+  });
+
   const [departments, setDepartments] = useState([]);
 
   const roles = [
@@ -43,29 +49,34 @@ const Signup = () => {
     { name: "1", value: "one" },
     { name: "2", value: "two" },
     { name: "3", value: "three" },
-    { name: "4", value: "four" }
+    { name: "4", value: "four" },
   ];
 
   const getDepartments = () => {
     fetcher("get-departments").then((res) => {
       const depts = res.result;
       const departments = [];
-      depts.map((dept) =>
+      depts?.forEach((dept) =>
         departments.push({ name: dept.title, value: dept._id })
       );
       setDepartments(departments);
-      setInput({ ...input, department: depts[0]._id });
+      if (depts && depts.length > 0)
+        setInput((prev) => ({ ...prev, department: depts[0]._id }));
     });
   };
 
   const handleChange = (e) => {
-    setStatus({ ...status, inputs: {} });
     const { name, value } = e.target;
+    setStatus((prev) => ({
+      ...prev,
+      inputs: { ...prev.inputs, [name]: "" },
+    }));
+    setErrorMessages((prev) => ({ ...prev, [name]: "" })); // Clear error message
     setInput({ ...input, [name]: value });
   };
 
   const handleRoleChange = (role) => {
-    setInput({ ...input, role: role });
+    setInput({ ...input, role });
   };
 
   const handleDeptChange = (dept) => {
@@ -73,19 +84,26 @@ const Signup = () => {
   };
 
   const handleGradeChange = (grade) => {
-    setInput({ ...input, grade: grade });
+    setInput({ ...input, grade });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateInput()) return;
-    checkUser().then((res) => {
-      if (res) {
-        setStatus({ ...status, inputs: { ...status.inputs, email: "error" } });
+
+    checkUser().then((exists) => {
+      if (exists) {
+        setStatus((prev) => ({
+          ...prev,
+          inputs: { ...prev.inputs, email: "error" },
+        }));
+        setErrorMessages((prev) => ({
+          ...prev,
+          email: "User already exists",
+        }));
         return;
-      } else {
-        createNewUser();
       }
+      createNewUser();
     });
   };
 
@@ -97,29 +115,40 @@ const Signup = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        if (res && res.result && res.result.length > 0) return true;
-        else return false;
+        return res?.result?.length > 0;
       });
   };
 
   const createNewUser = () => {
-    const result = fetcher("create-account", "post", input);
-    result.then((res) => {
+    fetcher("create-account", "post", input).then(() => {
       navigate("/account/wait-for-approval");
     });
   };
 
   const validateInput = () => {
     let valid = true;
+
     if (!validateEmail(input.email)) {
-      setStatus({ ...status, inputs: { ...status.inputs, email: "error" } });
+      setStatus((prev) => ({
+        ...prev,
+        inputs: { ...prev.inputs, email: "error" },
+      }));
+      setErrorMessages((prev) => ({
+        ...prev,
+        email: "Invalid email format",
+      }));
       valid = false;
     }
+
     if (!matchValues(input.password, input.cpassword)) {
-      setStatus({
-        ...status,
-        inputs: { ...status.inputs, cpassword: "error" },
-      });
+      setStatus((prev) => ({
+        ...prev,
+        inputs: { ...prev.inputs, cpassword: "error" },
+      }));
+      setErrorMessages((prev) => ({
+        ...prev,
+        cpassword: "Passwords do not match",
+      }));
       valid = false;
     }
 
@@ -156,20 +185,28 @@ const Signup = () => {
               status={status.inputs.name}
               required
             />
+
             <label htmlFor="email" className="w-100 mt-2 d-block">
               Email
             </label>
-            <Input
-              style={{ height: "2.5rem" }}
-              className="half-black"
-              placeholder="Email"
-              name="email"
-              id="email"
-              value={input.email}
-              onChange={handleChange}
-              status={status.inputs.email}
-              required
-            />
+            <Tooltip
+              title={status.inputs.email === "error" ? errorMessages.email : ""}
+              open={status.inputs.email === "error"}
+              placement="bottomLeft"
+            >
+              <Input
+                style={{ height: "2.5rem" }}
+                className="half-black"
+                placeholder="Email"
+                name="email"
+                id="email"
+                value={input.email}
+                onChange={handleChange}
+                status={status.inputs.email}
+                required
+              />
+            </Tooltip>
+
             <label htmlFor="role" className="w-100 mt-2 d-block">
               Role
             </label>
@@ -186,6 +223,7 @@ const Signup = () => {
                 </Select.Option>
               ))}
             </Select>
+
             <label htmlFor="department" className="w-100 mt-2 d-block">
               Department
             </label>
@@ -202,56 +240,80 @@ const Signup = () => {
                 </Select.Option>
               ))}
             </Select>
-            {input.role == "student" && (
-              <label htmlFor="grade" className="w-100 mt-2 d-block">
-                Year
-              </label>
+
+            {input.role === "student" && (
+              <>
+                <label htmlFor="grade" className="w-100 mt-2 d-block">
+                  Year
+                </label>
+                <Select
+                  id="grade"
+                  name="grade"
+                  onChange={handleGradeChange}
+                  value={input.grade}
+                  className="w-100"
+                >
+                  {grades.map((opt, index) => (
+                    <Select.Option key={index} value={opt.value}>
+                      {opt.name}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </>
             )}
-            {input.role == "student" && (
-              <Select
-                id="grade"
-                name="grade"
-                onChange={handleGradeChange}
-                value={input.grade}
-                className="w-100"
-              >
-                {grades.map((opt, index) => (
-                  <Select.Option key={index} value={opt.value}>
-                    {opt.name}
-                  </Select.Option>
-                ))}
-              </Select>
-            )}
+
             <label htmlFor="password" className="w-100 mt-2">
               Password
             </label>
-            <Input.Password
-              style={{ height: "2.5rem" }}
-              className="half-black"
-              placeholder="Password"
-              name="password"
-              id="password"
-              value={input.password}
-              onChange={handleChange}
-              status={status.inputs.password}
-              required
-              minLength="8"
-            />
+            <Tooltip
+              title={
+                status.inputs.password === "error"
+                  ? errorMessages.password
+                  : ""
+              }
+              open={status.inputs.password === "error"}
+              placement="bottomLeft"
+            >
+              <Input.Password
+                style={{ height: "2.5rem" }}
+                className="half-black"
+                placeholder="Password"
+                name="password"
+                id="password"
+                value={input.password}
+                onChange={handleChange}
+                status={status.inputs.password}
+                required
+                minLength="8"
+              />
+            </Tooltip>
+
             <label htmlFor="cpassword" className="w-100 mt-2">
               Confirm Password
             </label>
-            <Input.Password
-              style={{ height: "2.5rem" }}
-              className="half-black"
-              placeholder="Confirm Password"
-              name="cpassword"
-              id="cpassword"
-              value={input.cpassword}
-              onChange={handleChange}
-              status={status.inputs.cpassword}
-              required
-              minLength="8"
-            />
+            <Tooltip
+              title={
+                status.inputs.cpassword === "error"
+                  ? errorMessages.cpassword
+                  : ""
+              }
+              open={status.inputs.cpassword === "error"}
+              placement="bottomLeft"
+            >
+              <Input.Password
+                style={{ height: "2.5rem" }}
+                className="half-black"
+                placeholder="Confirm Password"
+                name="cpassword"
+                id="cpassword"
+                value={input.cpassword}
+                onChange={handleChange}
+                status={status.inputs.cpassword}
+                required
+                minLength="8"
+              />
+            </Tooltip>
+
             <Button
               className="rounded-button mt-3 text-white"
               style={{

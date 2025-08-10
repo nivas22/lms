@@ -26,6 +26,7 @@ const multer = require("multer");
 const mongodburl = process.env.MONGODB_URL;
 const { google } = require("googleapis");
 const { v4: uuidv4 } = require("uuid");
+const Feedback = require("./models/feedback");
 const OAuth2 = google.auth.OAuth2;
 const port = process.env.PORT || 3001;
 
@@ -236,6 +237,17 @@ app.post("/update-user/:id", (req, response) => {
     })
     .catch((err) => {
       response.json({ err: err });
+    });
+});
+
+app.post("/submit-course-feedback", (req, response) => {
+  console.log(req.body);
+  Feedback.create(req.body)
+    .then((res) => {
+      response.json({ result: res });
+    })
+    .catch((err) => {
+      response.json({ error: err });
     });
 });
 
@@ -651,6 +663,69 @@ app.post("/upload-student-activity-file/:id", async (req, response) => {
       .catch((err) => response.json({ error: err }));
   });
 });
+
+// GET users who completed courses created by a given teacher
+// GET users who completed courses created by a given teacher
+app.get("/get-completed-course-users/:teacherId", async (req, res) => {
+  try {
+    const { teacherId } = req.params;
+
+    // 1️⃣ Find all courses created by this teacher
+    const teacherCourses = await Course.find({ teachers: teacherId }).select("_id");
+
+    if (!teacherCourses.length) {
+      return res.json({ result: [] });
+    }
+
+    const courseIds = teacherCourses.map(c => c._id);
+
+    // 2️⃣ Find registrations with status 'finished' for those courses
+    const completedRegs = await CourseRegistration.find({
+      course: { $in: courseIds },
+      status: { $in: ["finished", "issued"] }
+    })
+      .populate("user", "name email role") // only needed fields from user
+      .populate("course"); // full course details
+
+    // 3️⃣ Prepare result
+    const completedUsers = completedRegs.map(reg => ({
+      _id: reg._id,
+      status: reg.status,
+      course: reg.course,         // now contains full course object
+      user: reg.user,          // user object with name/email/role
+      completedAt: reg.updatedAt, // date they completed
+    }));
+
+    res.json({ result: completedUsers });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+app.patch("/issue-certificate/:registrationId", async (req, res) => {
+  try {
+    const { registrationId } = req.params;
+
+    const updated = await CourseRegistration.findByIdAndUpdate(
+      registrationId,
+      { status: "issued" },
+      { new: true }
+    )
+      .populate("user", "name email role")
+      .populate("course");
+
+    if (!updated) {
+      return res.status(404).json({ error: "Course registration not found" });
+    }
+
+    res.json({ result: updated, message: "Certificate issued successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 
 //Methods
 const convertFieldsToObjectId = (input) => {

@@ -13,6 +13,7 @@ import { MdLogout } from "react-icons/md";
 import { FaPencilAlt } from "react-icons/fa";
 import MyCourses from "./MyCourses";
 import MyLessons from "./MyLessons";
+import CompletedCourseUsers from "./CompletedCourseUsers";
 import Me from "../common/Me";
 const { Header, Sider, Content } = Layout;
 
@@ -33,9 +34,12 @@ const Teacher = () => {
       content = <MyCourses />;
       break;
     case "3":
-      content = <MyLessons />;
+      content = <CompletedCourseUsers />;
       break;
     case "4":
+      content = <MyLessons />;
+      break;
+    case "5":
       content = <Me />;
       break;
     default:
@@ -77,11 +81,16 @@ const Teacher = () => {
             },
             {
               key: "3",
+              icon: <BookOutlined />,
+              label: "Courses Completed",
+            },
+            {
+              key: "4",
               icon: <FaPencilAlt />,
               label: "My Lessons",
             },
             {
-              key: "4",
+              key: "5",
               icon: <UserOutlined />,
               label: "Me",
             },
