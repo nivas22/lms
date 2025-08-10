@@ -16,6 +16,8 @@ const StudentNote = require("./models/student-notes");
 const Lesson = require("./models/lesson");
 const Exam = require("./models/exam");
 
+const loadCoursesFromFiles = require("./loadCourses");
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
@@ -35,8 +37,10 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then(() => {
+  .then(async () => {
     console.log("MongoDB connected");
+
+    await loadCoursesFromFiles();
   })
   .catch((error) => {
     console.error("MongoDB connection error:", error);
@@ -359,6 +363,23 @@ app.get("/get-courses", (req, response) => {
     });
 });
 
+app.get("/get-course-quiz/:courseId", (req, res) => {
+  const { courseId } = req.params;
+
+  Course.findById(courseId)
+    .select("questions")
+    .then((course) => {
+      if (!course) {
+        return res.status(404).json({ error: "Course not found" });
+      }
+      res.json({ result: course.questions });
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err.message });
+    });
+});
+
+
 app.post("/create-course", (req, response) => {
   const { name, courseid, department } = req.body;
   const newDept = new Course({
@@ -489,20 +510,40 @@ app.get("/get-course-regs", (req, response) => {
     });
 });
 
-app.post("/register-for-course", (req, response) => {
+app.post("/register-for-course", async (req, response) => {
   const { uid, courseid } = req.body;
-  const newCourseReg = new CourseRegistration({
-    course: convertFieldsToObjectId(courseid),
-    user: convertFieldsToObjectId(uid),
-  });
-  newCourseReg
-    .save()
-    .then((res) => {
-      response.json({ result: res });
-    })
-    .catch((err) => {
-      response.json({ error: err });
+
+  try {
+    // Check if the user is already registered for another active course
+    const existingRegistration = await CourseRegistration.findOne({
+      user: convertFieldsToObjectId(uid),
+      status: { $in: ["registered", "in-progress"] } // you can adjust these statuses
     });
+
+    if (existingRegistration) {
+      return response.status(400).json({
+        error: "You are already enrolled in another course. You can only access one course at a time."
+      });
+    }
+
+    // Calculate exam schedule time (2 weeks from now)
+    const examScheduleTime = new Date();
+    examScheduleTime.setDate(examScheduleTime.getDate() + 14);
+
+    // Proceed to register for the new course
+    const newCourseReg = new CourseRegistration({
+      course: convertFieldsToObjectId(courseid),
+      user: convertFieldsToObjectId(uid),
+      status: "registered",
+      examScheduleTime // store exam schedule time
+    });
+
+    const savedCourseReg = await newCourseReg.save();
+    response.json({ result: savedCourseReg });
+
+  } catch (err) {
+    response.status(500).json({ error: err.message });
+  }
 });
 
 app.post("/update-course-reg/:id", (req, response) => {
@@ -682,7 +723,7 @@ app.get("/get-completed-course-users/:teacherId", async (req, res) => {
     // 2️⃣ Find registrations with status 'finished' for those courses
     const completedRegs = await CourseRegistration.find({
       course: { $in: courseIds },
-      status: { $in: ["finished", "issued"] }
+      status: { $in: ["FEEDBACK_DONE", "issued"] }
     })
       .populate("user", "name email role") // only needed fields from user
       .populate("course"); // full course details

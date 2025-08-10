@@ -1,0 +1,52 @@
+[
+  {
+    "question": "Which of the following is a feature of Java?",
+    "options": ["Platform dependent", "Object-oriented", "Manual memory management", "Multiple inheritance via classes"],
+    "answer": "Object-oriented"
+  },
+  {
+    "question": "Which method is the entry point of a Java program?",
+    "options": ["start()", "main()", "run()", "init()"],
+    "answer": "main()"
+  },
+  {
+    "question": "Which keyword is used to inherit a class in Java?",
+    "options": ["inherits", "extends", "implements", "super"],
+    "answer": "extends"
+  },
+  {
+    "question": "Which of these is NOT a Java keyword?",
+    "options": ["static", "String", "new", "try"],
+    "answer": "String"
+  },
+  {
+    "question": "What is the default value of a boolean variable in Java?",
+    "options": ["true", "false", "null", "0"],
+    "answer": "false"
+  },
+  {
+    "question": "Which exception is thrown when dividing by zero in Java?",
+    "options": ["ArithmeticException", "NullPointerException", "NumberFormatException", "ArrayIndexOutOfBoundsException"],
+    "answer": "ArithmeticException"
+  },
+  {
+    "question": "Which collection class allows only unique elements and has no guaranteed order?",
+    "options": ["ArrayList", "HashMap", "HashSet", "Vector"],
+    "answer": "HashSet"
+  },
+  {
+    "question": "Which of these is used to run Java bytecode?",
+    "options": ["JVM", "JRE", "JDK", "Compiler"],
+    "answer": "JVM"
+  },
+  {
+    "question": "What is the purpose of the 'final' keyword in Java?",
+    "options": ["To declare constants", "To prevent method overriding", "To prevent inheritance", "All of the above"],
+    "answer": "All of the above"
+  },
+  {
+    "question": "Which operator is used to compare two objects in Java for reference equality?",
+    "options": ["equals()", "==", "compare()", "compareTo()"],
+    "answer": "=="
+  }
+]

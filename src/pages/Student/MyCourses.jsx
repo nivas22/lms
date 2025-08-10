@@ -1,23 +1,45 @@
 import { useDispatch, useSelector } from "react-redux";
 import AntdTable from "../../components/AntdTable";
 import { useEffect, useState, useRef } from "react";
-import { Button, Input, Popconfirm, Select, message, Modal, Form } from "antd";
+import { Button, Input, Popconfirm, Select, message, Modal, Form, Radio } from "antd";
 import { fetcher } from "../../_services";
 import { setCourseRegs } from "../../store/store";
 import API_URL from "../../apiUrl";
-import html2canvas from "html2canvas"; // <-- Added for download
+import html2canvas from "html2canvas";
+import dayjs from "dayjs";
+import { Tooltip } from "antd";
+
+const COURSE_STATUS = Object.freeze({
+  REGISTERED: "REGISTERED",
+  EXAM_DONE: "EXAM_DONE",
+  FEEDBACK_DONE: "FEEDBACK_DONE",
+  ISSUED: "ISSUED",
+});
+
+// Example usage
+console.log(COURSE_STATUS.REGISTERED); // "REGISTERED"
+
+
+
+const PASS_MARKS = 70; // Passing percentage
 
 const MyCourses = () => {
   const apiUrl = API_URL;
   const [error, setError] = useState(false);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isCertModalVisible, setIsCertModalVisible] = useState(false); 
+  const [isCertModalVisible, setIsCertModalVisible] = useState(false);
+  const [isQuizModalVisible, setIsQuizModalVisible] = useState(false);
+
   const [selectedCourse, setSelectedCourse] = useState(null);
+  const [clickedCourseReg, setClickedCourseReg] = useState(null);
   const [feedback, setFeedback] = useState("");
 
+  const [quizQuestions, setQuizQuestions] = useState([]);
+  const [quizAnswers, setQuizAnswers] = useState({});
+
   const dispatch = useDispatch();
-  const certRef = useRef(null); // <-- Reference for certificate DOM
+  const certRef = useRef(null);
 
   useEffect(() => {
     if (error) message.error("Fetching Data Error !");
@@ -66,18 +88,17 @@ const MyCourses = () => {
     });
   };
 
-  const updateCourseReg = (courseReg, status) => {
+  const updateCourseReg = (courseReg, status, score) => {
     fetch(`${apiUrl}/update-course-reg/${courseReg._id}`, {
       method: "post",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status }),
+      body: JSON.stringify({ status, score }),
     })
       .then((res) => res.json())
       .then(() => {
         getCourseRegs();
         const course = myCourses.find((c) => c._id === courseReg.course);
         setSelectedCourse(course);
-        setIsModalVisible(true);
       })
       .catch(() => setError(true));
   };
@@ -104,6 +125,7 @@ const MyCourses = () => {
         setIsModalVisible(false);
         setFeedback("");
         setSelectedCourse(null);
+        updateCourseReg(clickedCourseReg, COURSE_STATUS.FEEDBACK_DONE);
       })
       .catch(() => message.error("Failed to submit feedback."));
   };
@@ -116,6 +138,42 @@ const MyCourses = () => {
       link.download = `certificate-${selectedCourse?.title || "course"}.png`;
       link.click();
     });
+  };
+
+  // Load quiz questions from API
+  const  startQuiz = (course) => {
+    setSelectedCourse(course);
+    fetch(`${apiUrl}/get-course-quiz/${course._id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setQuizQuestions(data.result || []);
+        setQuizAnswers({});
+        setIsQuizModalVisible(true);
+      })
+      .catch(() => {
+        message.error("Failed to load quiz.");
+      });
+  };
+
+  const submitQuiz = () => {
+    let correctCount = 0;
+    quizQuestions.forEach((q, index) => {
+      if (quizAnswers[index] === q.answer) {
+        correctCount++;
+      }
+    });
+
+    const score = (correctCount / quizQuestions.length) * 100;
+
+    if (score >= PASS_MARKS) {
+      message.success(`You passed with ${score.toFixed(0)}%!`);
+      const courseReg = courseRegs.find((cr) => cr.course === selectedCourse._id);
+      if (courseReg) updateCourseReg(courseReg, COURSE_STATUS.EXAM_DONE, score);
+    } else {
+      message.error(`You scored ${score.toFixed(0)}%. Please try again.`);
+    }
+
+    setIsQuizModalVisible(false);
   };
 
   const columns = [
@@ -164,14 +222,40 @@ const MyCourses = () => {
 
         if (!courseReg) return null;
 
-        if (courseReg.status === "registered") {
+        if (courseReg.status === COURSE_STATUS.REGISTERED.toLowerCase()) {
+          const isBeforeExamTime = dayjs().isBefore(dayjs(courseReg.examScheduleTime));
+
           return (
-            <Popconfirm
-              title="Finish this course?"
-              onConfirm={() => updateCourseReg(courseReg, "finished")}
+            <Tooltip
+              title={
+                isBeforeExamTime
+                  ? `Available on ${dayjs(courseReg.examScheduleTime).format("MMMM D, YYYY h:mm A")}`
+                  : "Click to start the quiz"
+              }
             >
-              <Button type="primary">Finish</Button>
-            </Popconfirm>
+              <Button
+                type="primary"
+                onClick={() => startQuiz(item)}
+                disabled={isBeforeExamTime}
+              >
+                Take Quiz
+              </Button>
+            </Tooltip>
+          );
+        }
+
+        if (courseReg.status === COURSE_STATUS.EXAM_DONE) {
+          return (
+            <Button
+              type="primary"
+              onClick={() => {
+                setSelectedCourse(item);
+                setIsModalVisible(true);
+                setClickedCourseReg(courseReg);
+              }}
+            >
+              Give Feedback
+            </Button>
           );
         }
 
@@ -253,6 +337,40 @@ const MyCourses = () => {
         </Form>
       </Modal>
 
+      {/* Quiz Modal */}
+      <Modal
+        title={`Quiz - ${selectedCourse?.title}`}
+        visible={isQuizModalVisible}
+        onOk={submitQuiz}
+        onCancel={() => setIsQuizModalVisible(false)}
+        okText="Submit Quiz"
+      >
+        {quizQuestions.length > 0 ? (
+          quizQuestions.map((q, index) => (
+            <div key={index} style={{ marginBottom: "20px" }}>
+              <strong>
+                {index + 1}. {q.question}
+              </strong>
+              <Radio.Group
+                onChange={(e) =>
+                  setQuizAnswers((prev) => ({ ...prev, [index]: e.target.value }))
+                }
+                value={quizAnswers[index]}
+                style={{ display: "flex", flexDirection: "column", marginTop: "5px" }}
+              >
+                {q.options.map((opt, i) => (
+                  <Radio key={i} value={opt}>
+                    {opt}
+                  </Radio>
+                ))}
+              </Radio.Group>
+            </div>
+          ))
+        ) : (
+          <p>No quiz available for this course.</p>
+        )}
+      </Modal>
+
       {/* Certificate Modal */}
       <Modal
         visible={isCertModalVisible}
@@ -267,7 +385,8 @@ const MyCourses = () => {
         ]}
         width={800}
       >
-        <div ref={certRef} // <-- this is what gets downloaded
+        <div
+          ref={certRef}
           style={{
             border: "8px solid gold",
             padding: "40px",
@@ -280,22 +399,38 @@ const MyCourses = () => {
             Certificate of Completion
           </h1>
           <p style={{ marginTop: "20px" }}>This is to certify that</p>
-          <h2 style={{ fontSize: "2rem", color: "#2b6cb0" }}>
-            {currentUser.name}
-          </h2>
+          <h2 style={{ fontSize: "2rem", color: "#2b6cb0" }}>{currentUser.name}</h2>
           <p>has successfully completed the course</p>
           <h3 style={{ fontSize: "1.8rem", color: "#38a169" }}>
             {selectedCourse?.title}
           </h3>
           <p>Date: {new Date().toLocaleDateString()}</p>
-          <div style={{ display: "flex", justifyContent: "space-around", marginTop: "50px" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-around",
+              marginTop: "50px",
+            }}
+          >
             <div>
               <p>Instructor</p>
-              <div style={{ borderTop: "1px solid black", width: "150px", margin: "auto" }}></div>
+              <div
+                style={{
+                  borderTop: "1px solid black",
+                  width: "150px",
+                  margin: "auto",
+                }}
+              ></div>
             </div>
             <div>
               <p>Director</p>
-              <div style={{ borderTop: "1px solid black", width: "150px", margin: "auto" }}></div>
+              <div
+                style={{
+                  borderTop: "1px solid black",
+                  width: "150px",
+                  margin: "auto",
+                }}
+              ></div>
             </div>
           </div>
         </div>

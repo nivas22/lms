@@ -1,0 +1,52 @@
+[
+  {
+    "question": "Which keyword is used to define a function in Python?",
+    "options": ["function", "def", "func", "define"],
+    "answer": "def"
+  },
+  {
+    "question": "What is the output of print(type([])) in Python?",
+    "options": ["<class 'list'>", "<class 'tuple'>", "<class 'dict'>", "<class 'set'>"],
+    "answer": "<class 'list'>"
+  },
+  {
+    "question": "Which of the following is NOT a valid Python data type?",
+    "options": ["list", "tuple", "array", "set"],
+    "answer": "array"
+  },
+  {
+    "question": "How do you start a comment in Python?",
+    "options": ["//", "#", "/*", "--"],
+    "answer": "#"
+  },
+  {
+    "question": "Which operator is used for exponentiation in Python?",
+    "options": ["^", "**", "pow", "exp"],
+    "answer": "**"
+  },
+  {
+    "question": "What is the correct file extension for Python files?",
+    "options": [".py", ".python", ".pyt", ".pt"],
+    "answer": ".py"
+  },
+  {
+    "question": "Which built-in function returns the length of an object in Python?",
+    "options": ["length()", "size()", "count()", "len()"],
+    "answer": "len()"
+  },
+  {
+    "question": "What is the output of bool(0) in Python?",
+    "options": ["True", "False", "0", "None"],
+    "answer": "False"
+  },
+  {
+    "question": "Which method is used to add an element to a list in Python?",
+    "options": ["append()", "add()", "push()", "insert()"],
+    "answer": "append()"
+  },
+  {
+    "question": "What will be the output of 2 == '2' in Python?",
+    "options": ["True", "False", "Error", "None"],
+    "answer": "False"
+  }
+]

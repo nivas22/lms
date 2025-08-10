@@ -81,6 +81,8 @@ const Courses = () => {
           setTimeout(() => {
             getCourseRegs();
           }, 500);
+        } else {
+          message.error(res.error);
         }
       });
   };

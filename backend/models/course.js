@@ -9,10 +9,20 @@ const courseSchema = new mongoose.Schema(
       required: false,
       ref: "Department",
     },
+
     teachers: [
       { type: mongoose.Types.ObjectId, ref: "Teacher", required: false },
     ],
     status: { type: String, required: false, default: "not-open" },
+
+    questions: [
+      {
+        question: String,
+        options: [String],
+        answer: String
+      }
+    ]
+
   },
   { collection: "Course" }
 );
