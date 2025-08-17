@@ -16,7 +16,7 @@ const StudentNote = require("./models/student-notes");
 const Lesson = require("./models/lesson");
 const Exam = require("./models/exam");
 
-const loadCoursesFromFiles = require("./loadCourses");
+const { loadDepartments, loadCoursesFromFiles } = require("./loadCourses");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -38,9 +38,12 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(async () => {
+    console.log("Connected to MongoDB", mongodburl);
     console.log("MongoDB connected");
 
     await loadCoursesFromFiles();
+    await loadDepartments();
+
   })
   .catch((error) => {
     console.error("MongoDB connection error:", error);
@@ -82,10 +85,10 @@ app.post("/create-account", (req, response) => {
       });
       newUser
         .save()
-        .then((res) => response.json({ result: res }))
+        .then((res) => { console.log(res); return response.json({ result: res })})
         .catch((err) => response.json({ error: err }));
     })
-    .catch((err) => response.json({ error: err }));
+    .catch((err) => { console.log(err); return response.json({ error: err })});
 });
 
 app.post("/send-email", (req, response) => {

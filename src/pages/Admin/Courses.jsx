@@ -23,8 +23,10 @@ const Courses = () => {
     {
       title: "Department",
       render(item) {
-        return departments
-          ? departments.filter((dept) => dept.value == item.department)[0].name
+        const departmentsRes = departments && departments.filter((dept) => dept.value == item.department);
+
+        return departmentsRes.length > 0
+          ? departmentsRes[0].title
           : "";
       },
     },
