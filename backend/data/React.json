@@ -1,0 +1,72 @@
+[
+  {
+    "question": "What is React.js mainly used for?",
+    "options": ["Backend development", "Building user interfaces", "Database management", "Mobile operating systems"],
+    "answer": "Building user interfaces"
+  },
+  {
+    "question": "Who developed React.js?",
+    "options": ["Google", "Facebook", "Microsoft", "Twitter"],
+    "answer": "Facebook"
+  },
+  {
+    "question": "Which of the following is TRUE about components in React?",
+    "options": [
+      "Components must be class-based only",
+      "Components can be reused",
+      "Components cannot have state",
+      "Components must be stored in a single file"
+    ],
+    "answer": "Components can be reused"
+  },
+  {
+    "question": "In React, what are props used for?",
+    "options": [
+      "To store component's internal state",
+      "To pass data from one component to another",
+      "To trigger lifecycle events",
+      "To define CSS styles"
+    ],
+    "answer": "To pass data from one component to another"
+  },
+  {
+    "question": "Which of these is NOT a React feature?",
+    "options": ["Component-based architecture", "Two-way data binding by default", "Virtual DOM", "JSX syntax"],
+    "answer": "Two-way data binding by default"
+  },
+  {
+    "question": "Which hook is used to manage state in a functional component?",
+    "options": ["useReducer", "useState", "useEffect", "useMemo"],
+    "answer": "useState"
+  },
+  {
+    "question": "What is the correct syntax to pass a prop named name with value \"John\" to a component Greeting?",
+    "options": [
+      "<Greeting {name=\"John\"} />",
+      "<Greeting name=\"John\" />",
+      "<Greeting name: \"John\" />",
+      "<Greeting prop.name=\"John\" />"
+    ],
+    "answer": "<Greeting name=\"John\" />"
+  },
+  {
+    "question": "What will the following code render?\n\nfunction App() {\n  const [count, setCount] = React.useState(0);\n  setCount(count + 1);\n  return <h1>{count}</h1>;\n}",
+    "options": ["Infinite loop", "0", "1", "undefined"],
+    "answer": "Infinite loop"
+  },
+  {
+    "question": "In React, what does useMemo primarily help with?",
+    "options": [
+      "Caching function definitions",
+      "Preventing unnecessary recalculations of a value",
+      "Creating event handlers",
+      "Storing component state"
+    ],
+    "answer": "Preventing unnecessary recalculations of a value"
+  },
+  {
+    "question": "Which method is used in class components to fetch data after the component mounts?",
+    "options": ["componentWillMount", "componentDidMount", "shouldComponentUpdate", "componentWillUpdate"],
+    "answer": "componentDidMount"
+  }
+]
