@@ -11,6 +11,7 @@ const myReducer = createSlice({
     exams: [],
     studentActivities: [],
     studentNotes: [],
+    feedbacks: [],
   },
   reducers: {
     setUsers: (state, action) => {
@@ -37,6 +38,9 @@ const myReducer = createSlice({
     setStudentNotes: (state, action) => {
       state.studentNotes = action.payload;
     },
+    setFeedbacks: (state, action) => {
+      state.feedbacks = action.payload;
+    },
   },
 });
 
@@ -55,5 +59,6 @@ export const {
   setExams,
   setStudentNotes,
   setStudentActivities,
+  setFeedbacks,
 } = myReducer.actions;
 export default store;

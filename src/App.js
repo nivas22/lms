@@ -19,6 +19,7 @@ import {
   setExams,
   setStudentActivities,
   setStudentNotes,
+  setFeedbacks,
 } from "./store/store";
 import { useEffect, useState } from "react";
 import AccountBanned from "./pages/General/AccountBanned";
@@ -112,6 +113,7 @@ function App() {
     getExams();
     getStudentActivities();
     getStudentNotes();
+    getFeedbacks();
   }, []);
 
   useEffect(() => {
@@ -157,6 +159,18 @@ function App() {
       })
       .catch((err) => {
         console.log("FETCH USERS ERROR", err);
+        setError(true);
+      });
+  };
+
+  const getFeedbacks = () => {
+    fetcher("get-feedbacks")
+      .then((res) => {
+        const feedbacks = res.result;
+        if (feedbacks != undefined) dispatch(setFeedbacks(feedbacks));
+      })
+      .catch((err) => {
+        console.log("FETCH FEEDBACKS ERROR", err);
         setError(true);
       });
   };

@@ -258,6 +258,14 @@ app.post("/submit-course-feedback", (req, response) => {
     });
 });
 
+app.get("/get-feedbacks", (req, response) => {
+  Feedback.find()
+    .then((res) => response.json({ result: res }))
+    .catch((err) => {
+      response.json({ error: err });
+    });
+});
+
 app.get("/get-users", (req, response) => {
   User.find()
     .then((res) => response.json({ result: res }))
