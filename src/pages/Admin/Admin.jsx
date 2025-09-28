@@ -12,12 +12,13 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme, Popconfirm } from "antd";
-import { MdGroups, MdLogout, MdPeople } from "react-icons/md";
+import { MdGroups, MdLogout, MdPeople, MdFeedback } from "react-icons/md";
 import Departments from "./Departments";
 import Courses from "./Courses";
 import Teachers from "./Teachers";
 import Students from "./Students";
 import Me from "../common/Me";
+import Feedbacks from "./Feedback";
 const { Header, Sider, Content } = Layout;
 
 const Admin = () => {
@@ -46,9 +47,12 @@ const Admin = () => {
       content = <Students />;
       break;
     case "6":
-      content = <Account />;
+      content = <Feedbacks />;
       break;
     case "7":
+      content = <Account />;
+      break;
+    case "8":
       content = <Me />;
       break;
 
@@ -107,11 +111,16 @@ const Admin = () => {
 
             {
               key: "6",
+              icon: <MdFeedback />,
+              label: "Feedbacks",
+            },
+            {
+              key: "7",
               icon: <SettingFilled />,
               label: "Manage Accounts",
             },
             {
-              key: "7",
+              key: "8",
               icon: <UserOutlined />,
               label: "Me",
             },

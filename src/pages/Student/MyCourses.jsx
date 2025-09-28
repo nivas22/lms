@@ -57,6 +57,10 @@ const MyCourses = () => {
 
   const myCourseRegs = courseRegs.filter((cr) => cr.user === currentUser._id);
 
+  const teachers = useSelector((state) => state.myReducer.users).filter(
+    (user) => user.role == "teacher" && user.account_status == "active"
+  );
+
   const myFinalCourses = myCourses.filter((course) =>
     myCourseRegs.some((cr) => cr.course === course._id)
   );
@@ -109,12 +113,22 @@ const MyCourses = () => {
       return;
     }
 
+    console.log("selectedCourse", selectedCourse);
+    
+    const allTeachers = teachers.filter((teacher) =>
+      selectedCourse.teachers.includes(teacher._id)
+    );
+
+    const teacherNames = allTeachers.map(t => t.name).join(", ");
+
+
     fetch(`${apiUrl}/submit-course-feedback`, {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         courseId: selectedCourse._id,
-        teacherId: selectedCourse.teacher,
+        courseName: selectedCourse.title,
+        teachers: teacherNames,
         userId: currentUser._id,
         feedback,
       }),

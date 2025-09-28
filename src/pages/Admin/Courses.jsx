@@ -545,11 +545,11 @@ const Courses = () => {
         onOk={assignTeacherToCourse}
         okButtonProps={{ disabled: assignedTeachers.length == 0 }}
       >
-        {showAssignModal && (
+        {/* {showAssignModal && (
           <Select
             onChange={(val) => {
               !assignedTeachers.includes(val[val.length - 1]) &&
-                setAssignedTeachers([...assignedTeachers, val[val.length - 1]]);
+                setAssignedTeachers(val);
             }}
             value={assignedTeachers}
             mode="multiple"
@@ -567,7 +567,23 @@ const Courses = () => {
               </Select.Option>
             ))}
           </Select>
-        )}
+        )} */}
+
+
+        {showAssignModal && (
+  <Select
+    value={assignedTeachers[0] || null} // keep first item only
+    onChange={(val) => setAssignedTeachers([val])} // wrap in array
+    style={{ width: "80%" }}
+    className="mx-auto d-block"
+  >
+    {teachers.map((teacher) => (
+      <Select.Option key={teacher._id} value={teacher._id}>
+        {teacher.name}
+      </Select.Option>
+    ))}
+  </Select>
+)}
       </Modal>
     </div>
   );

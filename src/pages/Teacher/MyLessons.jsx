@@ -58,6 +58,7 @@ const MyLessons = () => {
             <Button
               onClick={() => {
                 setShowViewModal(true);
+                
                 setSelectedLesson(item);
               }}
               className="bg-success text-white"
@@ -78,8 +79,9 @@ const MyLessons = () => {
             <Button
             className="ms-2"
             onClick={() => {
+              console.log("Selected Lesson:", item);
+              setSelectedLesson(item);
               setShowViewExamModal(true);
-                setSelectedLesson(item);
             }}
             type="bg-warning text-black"
             icon={<PlusCircleFilled />}
@@ -145,6 +147,15 @@ const MyLessons = () => {
     files: [],
   });
   const [selectedLesson, setSelectedLesson] = useState(null);
+  const [selectedLessonForExam, setSelectedLessonForExam] = useState(null);
+
+  useEffect(() => {
+  if (selectedLesson) {
+    const exam = myExams.find((exam) => exam.lesson === selectedLesson._id);
+    setSelectedLessonForExam(exam || null);
+    console.log("Exam for selected lesson:", exam);
+  }
+}, [selectedLesson, myExams]);
 
   const handleFileChange = (e, type) => {
     console.log(e.target.files);
@@ -594,11 +605,7 @@ const MyLessons = () => {
 
                   <li>
                     Exam Title :{" "}
-                    {
-                      myExams.filter(
-                        (exam) => exam.lesson == selectedLesson._id
-                      )[0].title
-                    }
+                    {selectedLessonForExam && selectedLessonForExam?.title || ""}
                   </li>
                   <li>
                     Uploaded in :{" "}
@@ -610,8 +617,8 @@ const MyLessons = () => {
                   </li>
                   <li>
                     Attached Files :
-                    {selectedLesson.filePaths && selectedLesson.filePaths.length > 0 &&
-                      JSON.parse(selectedLesson.filePaths).map((file) => (
+                    {selectedLessonForExam.filePaths && selectedLessonForExam.filePaths.length > 0 &&
+                      JSON.parse(selectedLessonForExam.filePaths).map((file) => (
                         <small className="d-block">
                           {file}&nbsp;&nbsp;
                           <a

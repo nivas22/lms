@@ -134,6 +134,15 @@ const Lessons = () => {
   const [showViewExamModal, setShowViewExamModal] = useState(false);
 
   const [selectedLesson, setSelectedLesson] = useState(null);
+  const [selectedLessonForExam, setSelectedLessonForExam] = useState(null);
+
+  useEffect(() => {
+    if (selectedLesson) {
+      const exam = myExams.find((exam) => exam.lesson === selectedLesson._id);
+      setSelectedLessonForExam(exam || null);
+      console.log("Exam for selected lesson:", exam);
+    }
+  }, [selectedLesson, myExams]);
 
   const filterData = () => {
     const filtered =
@@ -243,23 +252,19 @@ const Lessons = () => {
                   <li>
                     Exam Title :{" "}
                     {
-                      myExams.filter(
-                        (exam) => exam.lesson == selectedLesson._id
-                      )[0].title
+                      selectedLessonForExam && selectedLessonForExam?.title || ""
                     }
                   </li>
                   <li>
                     Uploaded in :{" "}
                     {
-                      myExams
-                        .filter((exam) => exam.lesson == selectedLesson._id)[0]
-                        .createdAt.split("T")[0]
+                      selectedLessonForExam && selectedLessonForExam?.createdAt.split("T")[0] || ""
                     }
                   </li>
                   <li>
                     Attached Files :
-                    {selectedLesson.filePaths.length > 0 &&
-                      JSON.parse(selectedLesson.filePaths).map((file) => (
+                    { selectedLessonForExam && selectedLessonForExam?.filePaths.length > 0 &&
+                      JSON.parse(selectedLessonForExam.filePaths).map((file) => (
                         <small className="d-block">
                           {file}&nbsp;&nbsp;
                           <a
