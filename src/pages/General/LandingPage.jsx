@@ -45,7 +45,7 @@ const LandingPage = () => {
   const engineeringCourses = [
     {
       id: 1,
-      title: "Introduction to Computer Science",
+      title: "Java Programming",
       code: "CS101",
       duration: "12 weeks",
       level: "Beginner",
@@ -54,8 +54,8 @@ const LandingPage = () => {
     },
     {
       id: 2,
-      title: "Mechanical Engineering Fundamentals",
-      code: "ME201",
+      title: "Python for Engineers",
+      code: "CS201",
       duration: "14 weeks",
       level: "Intermediate",
       instructor: "Prof. Michael Chen",
@@ -63,8 +63,8 @@ const LandingPage = () => {
     },
     {
       id: 3,
-      title: "Electrical Circuits & Systems",
-      code: "EE301",
+      title: "React for Web Development",
+      code: "CS301",
       duration: "16 weeks",
       level: "Intermediate",
       instructor: "Dr. Emily Rodriguez",
@@ -72,8 +72,8 @@ const LandingPage = () => {
     },
     {
       id: 4,
-      title: "Civil Engineering Materials",
-      code: "CE401",
+      title: "C Programming Basics",
+      code: "CS401",
       duration: "10 weeks",
       level: "Beginner",
       instructor: "Prof. James Wilson",
@@ -81,8 +81,8 @@ const LandingPage = () => {
     },
     {
       id: 5,
-      title: "Chemical Process Principles",
-      code: "CHE501",
+      title: "PHP & MySQL for Web Apps",
+      code: "CS501",
       duration: "15 weeks",
       level: "Advanced",
       instructor: "Dr. Lisa Thompson",
@@ -99,8 +99,8 @@ const LandingPage = () => {
     },
     {
       id: 7,
-      title: "Thermodynamics",
-      code: "ME302",
+      title: "VUE JS Fundamentals",
+      code: "CE302",
       duration: "12 weeks",
       level: "Intermediate",
       instructor: "Dr. Robert Brown",
@@ -108,8 +108,8 @@ const LandingPage = () => {
     },
     {
       id: 8,
-      title: "Digital Signal Processing",
-      code: "EE402",
+      title: "Node.js & Express",
+      code: "CE402",
       duration: "16 weeks",
       level: "Advanced",
       instructor: "Prof. Maria Garcia",
@@ -117,7 +117,7 @@ const LandingPage = () => {
     },
     {
       id: 9,
-      title: "Structural Analysis",
+      title: "Networking Essentials",
       code: "CE502",
       duration: "18 weeks",
       level: "Advanced",
@@ -126,8 +126,8 @@ const LandingPage = () => {
     },
     {
       id: 10,
-      title: "Biochemical Engineering",
-      code: "CHE602",
+      title: "Database Management Systems",
+      code: "CE602",
       duration: "14 weeks",
       level: "Advanced",
       instructor: "Prof. Jennifer Lee",
