@@ -1,5 +1,5 @@
-import { Button, Input } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import { Button, Input, Card, Row, Col, Tag } from "antd";
+import { UserOutlined, MailOutlined } from "@ant-design/icons";
 import lms from "../../assets/undraw_online_learning_re_qw08.svg";
 import { FaHandPointUp } from "react-icons/fa";
 import { GrGrow } from "react-icons/gr";
@@ -9,248 +9,526 @@ import teacher from "../../assets/undraw_teacher_re_sico.svg";
 import student from "../../assets/undraw_online_reading_np7n.svg";
 import admin from "../../assets/undraw_dashboard_re_3b76.svg";
 import logo from "../../assets/school-solid.svg";
-import Footer from "../../components/Footer";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import "./css/LandingPage.css";
+
 const LandingPage = () => {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("currentUser"));
+  
   useEffect(() => {
     if (user) {
       navigate("/me/home");
     }
-  }, []);
+  }, [user, navigate]);
+
+  const handleSearch = (value) => {
+    if (value.trim()) {
+      console.log("Searching for:", value);
+      // Implement search functionality
+    }
+  };
+
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleEmailUs = () => {
+    window.location.href = "mailto:support@mentoriq.com?subject=Inquiry%20about%20MentorIQ&body=Hello%20MentorIQ%20team,";
+  };
+
+  // Engineering courses data
+  const engineeringCourses = [
+    {
+      id: 1,
+      title: "Introduction to Computer Science",
+      code: "CS101",
+      duration: "12 weeks",
+      level: "Beginner",
+      instructor: "Dr. Sarah Johnson",
+      category: "Computer Science"
+    },
+    {
+      id: 2,
+      title: "Mechanical Engineering Fundamentals",
+      code: "ME201",
+      duration: "14 weeks",
+      level: "Intermediate",
+      instructor: "Prof. Michael Chen",
+      category: "Mechanical Engineering"
+    },
+    {
+      id: 3,
+      title: "Electrical Circuits & Systems",
+      code: "EE301",
+      duration: "16 weeks",
+      level: "Intermediate",
+      instructor: "Dr. Emily Rodriguez",
+      category: "Electrical Engineering"
+    },
+    {
+      id: 4,
+      title: "Civil Engineering Materials",
+      code: "CE401",
+      duration: "10 weeks",
+      level: "Beginner",
+      instructor: "Prof. James Wilson",
+      category: "Civil Engineering"
+    },
+    {
+      id: 5,
+      title: "Chemical Process Principles",
+      code: "CHE501",
+      duration: "15 weeks",
+      level: "Advanced",
+      instructor: "Dr. Lisa Thompson",
+      category: "Chemical Engineering"
+    },
+    {
+      id: 6,
+      title: "Data Structures & Algorithms",
+      code: "CS202",
+      duration: "14 weeks",
+      level: "Intermediate",
+      instructor: "Prof. David Kim",
+      category: "Computer Science"
+    },
+    {
+      id: 7,
+      title: "Thermodynamics",
+      code: "ME302",
+      duration: "12 weeks",
+      level: "Intermediate",
+      instructor: "Dr. Robert Brown",
+      category: "Mechanical Engineering"
+    },
+    {
+      id: 8,
+      title: "Digital Signal Processing",
+      code: "EE402",
+      duration: "16 weeks",
+      level: "Advanced",
+      instructor: "Prof. Maria Garcia",
+      category: "Electrical Engineering"
+    },
+    {
+      id: 9,
+      title: "Structural Analysis",
+      code: "CE502",
+      duration: "18 weeks",
+      level: "Advanced",
+      instructor: "Dr. Andrew Taylor",
+      category: "Civil Engineering"
+    },
+    {
+      id: 10,
+      title: "Biochemical Engineering",
+      code: "CHE602",
+      duration: "14 weeks",
+      level: "Advanced",
+      instructor: "Prof. Jennifer Lee",
+      category: "Chemical Engineering"
+    }
+  ];
+
+  const getLevelColor = (level) => {
+    switch (level.toLowerCase()) {
+      case 'beginner': return 'green';
+      case 'intermediate': return 'orange';
+      case 'advanced': return 'red';
+      default: return 'blue';
+    }
+  };
 
   return !user ? (
-    <div
-      className="mx-auto mt-4 p-0"
-      style={{ width: "90%", minHeight: "30rem", height: "auto" }}
-    >
+    <div className="landing-page">
       {/* NAVIGATION */}
-      <nav
-        className="navbar navbar-expand-md navbar-light d-md-flex justify-content-md-between align-items-md-center mx-auto"
-        style={{ width: "95%" }}
-      >
-        <a className="navbar-brand d-flex align-items-center" href="/#">
-          <img
-            src={logo}
-            alt="logo"
-            style={{ width: "1.2rem", height: "1.2rem", objectFit: "cover" }}
-          />
-          <p className="m-0 ms-2">MentorIQ</p>
-        </a>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-
-        <div
-          className="collapse navbar-collapse d-md-flex flex-md-row flex-column justify-content-md-between justify-content-center align-items-center mx-auto mx-md-0 p-2 p-md-0"
-          id="navbarSupportedContent"
-          style={{ maxWidth: "80%" }}
-        >
-          <ul
-            className="navbar-nav mr-auto d-flex justify-content-md-between justify-content-center align-items-center align-items-md-left"
-            style={{ width: "40%" }}
-          >
-            <li className="nav-item">
-              <a className="nav-link" href="/#">
-                Home
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/#">
-                Courses
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/#">
-                Contact
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/#">
-                About Us
-              </a>
-            </li>
-          </ul>
-          <div style={{ width: "30%" }}>
-            <Input.Search
-              placeholder="Search"
-              style={{ width: "100%" }}
-              size="large"
+      <nav className="navbar navbar-expand-lg navbar-light custom-navbar">
+        <div className="container-fluid">
+          <a className="navbar-brand d-flex align-items-center" href="/">
+            <img
+              src={logo}
+              alt="MentorIQ logo"
+              className="brand-logo"
             />
+            <span className="brand-name">MentorIQ</span>
+          </a>
+          
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+              <li className="nav-item">
+                <a className="nav-link" href="#home" onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection('home');
+                }}>Home</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="#courses" onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection('courses');
+                }}>Courses</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="#services" onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection('services');
+                }}>Services</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="#contact" onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection('contact');
+                }}>Contact</a>
+              </li>
+            </ul>
+            
+            <Link to="/account/login" className="login-btn-link">
+              <Button
+                type="primary"
+                icon={<UserOutlined />}
+                className="login-btn"
+                size="large"
+              >
+                Login / Sign Up
+              </Button>
+            </Link>
           </div>
-          <Link to="/account/login" style={{ width: "25%" }} className="h-auto">
-            <Button
-              style={{ width: "100%", minHeight: "2.5rem" }}
-              type="primary"
-              icon={<UserOutlined />}
-              className="mt-2 mt-md-0 text-wrap h-auto"
-            >
-              Login / Sign Up
-            </Button>
-          </Link>
         </div>
       </nav>
-      {/* HERO PAGE */}
-      <div
-        className="w-100 p-0"
-        style={{ minHeight: "30rem", marginTop: "5rem" }}
-      >
-        <div className="w-100 row p-0" style={{ minHeight: "inherit" }}>
-          <div
-            className="col-md-6 col-sm-12 d-flex flex-column align-items-center justify-content-center"
-            style={{ borderLeft: "5px solid purple" }}
-          >
-            <h4 className="motto text-center">
-              The Best Learning Platform For Enhancing Skills
-            </h4>
-            <p
-              className="mt-2 fw-bold fs-5"
-              style={{ fontFamily: "'Electrolize', sans-serif" }}
-            >
-              Learn, Grow, Achieve – Together.
-            </p>
-            <div className="w-100 d-flex justify-content-center align-items-center first-actions mt-3">
-              <Link to="/account/login" className="w-50">
-                <Button className="btn1 bg-primary text-white fs-5">
-                  Get Started
-                </Button>
-              </Link>
+
+      {/* HERO SECTION */}
+      <section id="home" className="hero-section">
+        <div className="container">
+          <div className="row align-items-center">
+            <div className="col-lg-6 col-md-12 hero-content">
+              <div className="hero-text">
+                <h1 className="hero-title">
+                  The Best Learning Platform For Enhancing Skills
+                </h1>
+                <p className="hero-subtitle">
+                  Learn, Grow, Achieve – Together.
+                </p>
+                <p className="hero-description">
+                  Join thousands of students and educators in our comprehensive 
+                  learning management system designed for modern education.
+                </p>
+                <div className="hero-actions">
+                  <Link to="/account/login">
+                    <Button type="primary" size="large" className="cta-button">
+                      Get Started Now
+                    </Button>
+                  </Link>
+                  <Button 
+                    size="large" 
+                    className="secondary-button"
+                    onClick={() => scrollToSection('courses')}
+                  >
+                    Browse Courses
+                  </Button>
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-6 col-md-12 hero-image">
+              <img
+                src={lms}
+                alt="Online Learning"
+                className="img-fluid"
+              />
             </div>
           </div>
-          <div className="col-md-6 d-none d-md-inline d-flex justify-content-center align-items-center">
-            <img
-              src={lms}
-              alt="learn"
-              style={{ width: "100%", height: "100%" }}
-            />
-          </div>
         </div>
-      </div>
-      {/* QUALITIES */}
-      <div
-        className="w-100 mt-5 row g-2 g-md-0 align-items-center qualities"
-        style={{ minHeight: "5rem" }}
-      >
-        <div className="col-6 col-md-3">
-          <Button icon={<FaHandPointUp color="blue" />}>User-Friendly</Button>
-        </div>
-        <div className="col-6 col-md-3">
-          <Button icon={<GrGrow color="green" />}>Scalable</Button>
-        </div>
-        <div className="col-6 col-md-3">
-          <Button icon={<IoGlobe color="red" />}>
-            Accessible from anywhere
-          </Button>
-        </div>
-        <div className="col-6 col-md-3">
-          <Button icon={<IoIosSpeedometer color="brown" />}>Fast Speed</Button>
-        </div>
-      </div>
-      {/* SERVICES */}
-      <div className="w-100 mt-5" style={{ minHeight: "20rem" }}>
-        <div
-          className="w-100 row border rounded p-2"
-          style={{ height: "20rem" }}
-        >
-          <div className="col-6 d-flex justify-content-center align-items-center">
-            <img
-              src={teacher}
-              alt="teacher"
-              style={{ width: "100%", height: "15rem" }}
-            />
-          </div>
-          <div className="col-6 d-flex flex-column justify-content-center align-items-center">
-            <h4 className="text-center services_list">For Lecturers</h4>
-            <ul className="fw-bold services_list">
-              <li>Course Creation and Management</li>
-              <li>Assignment and Assessment Management</li>
-              <li>Grading and Analytics</li>
-              <li>Attendance Tracking</li>
-            </ul>
-          </div>
-        </div>
+      </section>
 
-        <div
-          className="w-100 row border rounded p-2 mt-3"
-          style={{ height: "20rem" }}
-        >
-          <div className="col-6 d-flex flex-column justify-content-center align-items-center">
-            <h4 className="text-center services_list">For Students</h4>
-            <ul className="fw-bold services_list">
-              <li>Course Access and Navigation</li>
-              <li>Assignment Submission</li>
-              <li>Gradebook and Progress Tracking</li>
-              <li>Resource Library</li>
-            </ul>
+      {/* FEATURES SECTION */}
+      <section className="features-section">
+        <div className="container">
+          <div className="row">
+            <div className="col-12 text-center mb-5">
+              <h2 className="section-title">Why Choose MentorIQ?</h2>
+              <p className="section-subtitle">Experience the difference with our platform</p>
+            </div>
           </div>
-          <div className="col-6 d-flex justify-content-center align-items-center">
-            <img
-              src={student}
-              alt="teacher"
-              style={{ width: "100%", height: "15rem" }}
-            />
+          <div className="row g-4">
+            <div className="col-md-3 col-sm-6">
+              <div className="feature-card">
+                <div className="feature-icon">
+                  <FaHandPointUp />
+                </div>
+                <h5>User-Friendly</h5>
+                <p>Intuitive interface designed for seamless navigation</p>
+              </div>
+            </div>
+            <div className="col-md-3 col-sm-6">
+              <div className="feature-card">
+                <div className="feature-icon">
+                  <GrGrow />
+                </div>
+                <h5>Scalable</h5>
+                <p>Grows with your institution's needs</p>
+              </div>
+            </div>
+            <div className="col-md-3 col-sm-6">
+              <div className="feature-card">
+                <div className="feature-icon">
+                  <IoGlobe />
+                </div>
+                <h5>Accessible</h5>
+                <p>Learn from anywhere, on any device</p>
+              </div>
+            </div>
+            <div className="col-md-3 col-sm-6">
+              <div className="feature-card">
+                <div className="feature-icon">
+                  <IoIosSpeedometer />
+                </div>
+                <h5>High Performance</h5>
+                <p>Fast loading times and reliable performance</p>
+              </div>
+            </div>
           </div>
         </div>
+      </section>
 
-        <div
-          className="w-100 row border rounded p-2 mt-3"
-          style={{ height: "20rem" }}
-        >
-          <div className="col-6 d-flex justify-content-center align-items-center">
-            <img
-              src={admin}
-              alt="teacher"
-              style={{ width: "100%", height: "15rem" }}
-            />
+      {/* COURSES SECTION */}
+      <section id="courses" className="courses-section">
+        <div className="container">
+          <div className="row">
+            <div className="col-12 text-center mb-5">
+              <h2 className="section-title">Engineering Courses</h2>
+              <p className="section-subtitle">Explore our comprehensive engineering curriculum</p>
+            </div>
           </div>
-          <div className="col-6 d-flex flex-column justify-content-center align-items-center">
-            <h4 className="text-center services_list">For Admins</h4>
-            <ul className="fw-bold services_list">
-              <li>User Management</li>
-              <li>Course Creation and Organization</li>
-              <li>Data Analytics and Reporting</li>
-              <li>Content Management</li>
-            </ul>
+          <Row gutter={[24, 24]}>
+            {engineeringCourses.map((course) => (
+              <Col xs={24} sm={12} lg={8} key={course.id}>
+                <Card
+                  className="course-card"
+                  hoverable
+                  actions={[
+                    <Button type="link" onClick={() => navigate('/account/login')}>
+                      Enroll Now
+                    </Button>,
+                    <Button type="link" onClick={() => navigate('/account/login')}>
+                      View Details
+                    </Button>
+                  ]}
+                >
+                  <div className="course-header">
+                    <Tag color={getLevelColor(course.level)} className="course-level-tag">
+                      {course.level}
+                    </Tag>
+                    <span className="course-duration">{course.duration}</span>
+                  </div>
+                  <h4 className="course-title">{course.title}</h4>
+                  <p className="course-code">{course.code}</p>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+          <div className="text-center mt-5">
+            <Button 
+              type="primary" 
+              size="large"
+              onClick={() => navigate('/account/login')}
+            >
+              View All Courses
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* SERVICES SECTION */}
+      <section id="services" className="services-section">
+        <div className="container">
+          <div className="row">
+            <div className="col-12 text-center mb-5">
+              <h2 className="section-title">Designed for Everyone</h2>
+              <p className="section-subtitle">Tailored experiences for different users</p>
+            </div>
+          </div>
+          
+          <div className="service-card">
+            <div className="row align-items-center">
+              <div className="col-md-6">
+                <img
+                  src={teacher}
+                  alt="For Lecturers"
+                  className="service-img"
+                />
+              </div>
+              <div className="col-md-6">
+                <div className="service-content">
+                  <h3>For Lecturers</h3>
+                  <ul>
+                    <li>Course Creation and Management</li>
+                    <li>Assignment and Assessment Management</li>
+                    <li>Grading and Analytics</li>
+                    <li>Attendance Tracking</li>
+                    <li>Interactive Teaching Tools</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="service-card">
+            <div className="row align-items-center flex-md-row-reverse">
+              <div className="col-md-6">
+                <img
+                  src={student}
+                  alt="For Students"
+                  className="service-img"
+                />
+              </div>
+              <div className="col-md-6">
+                <div className="service-content">
+                  <h3>For Students</h3>
+                  <ul>
+                    <li>Course Access and Navigation</li>
+                    <li>Assignment Submission</li>
+                    <li>Gradebook and Progress Tracking</li>
+                    <li>Resource Library</li>
+                    <li>Collaborative Learning</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="service-card">
+            <div className="row align-items-center">
+              <div className="col-md-6">
+                <img
+                  src={admin}
+                  alt="For Admins"
+                  className="service-img"
+                />
+              </div>
+              <div className="col-md-6">
+                <div className="service-content">
+                  <h3>For Admins</h3>
+                  <ul>
+                    <li>User Management</li>
+                    <li>Course Creation and Organization</li>
+                    <li>Data Analytics and Reporting</li>
+                    <li>Content Management</li>
+                    <li>System Configuration</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* STATS SECTION */}
+      <section className="stats-section">
+        <div className="container">
+          <div className="row">
+            <div className="col-12 text-center mb-5">
+              <h2 className="section-title">Our Impact</h2>
+            </div>
+          </div>
+          <div className="row text-center">
+            <div className="col-md-3 col-sm-6 stat-item">
+              <h3 className="stat-number">200+</h3>
+              <p className="stat-label">Courses</p>
+            </div>
+            <div className="col-md-3 col-sm-6 stat-item">
+              <h3 className="stat-number">40+</h3>
+              <p className="stat-label">Lecturers</p>
+            </div>
+            <div className="col-md-3 col-sm-6 stat-item">
+              <h3 className="stat-number">2,000+</h3>
+              <p className="stat-label">Students</p>
+            </div>
+            <div className="col-md-3 col-sm-6 stat-item">
+              <h3 className="stat-number">20+</h3>
+              <p className="stat-label">Schools</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CONTACT SECTION */}
+      <section id="contact" className="contact-section">
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-lg-8 text-center">
+              <div className="contact-content">
+                <MailOutlined className="contact-icon" />
+                <h2>Get In Touch With Us</h2>
+                <p className="contact-description">
+                  Have questions about our platform? Need technical support? 
+                  Interested in partnership opportunities? We're here to help you 
+                  transform your educational experience.
+                </p>
+                <div className="contact-info">
+                  <div className="contact-item">
+                    <strong>Email:</strong> support@mentoriq.com
+                  </div>
+                  <div className="contact-item">
+                    <strong>Response Time:</strong> Typically within 24 hours
+                  </div>
+                </div>
+                <div className="contact-actions">
+                  <Button 
+                    type="primary" 
+                    size="large" 
+                    icon={<MailOutlined />}
+                    className="contact-button"
+                    onClick={handleEmailUs}
+                  >
+                    Send Us an Email
+                  </Button>
+                  <Link to="/account/login">
+                    <Button 
+                      size="large" 
+                      className="secondary-contact-button"
+                    >
+                      Start Learning Now
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* COPYRIGHT SECTION */}
+      <div className="copyright-section">
+        <div className="container">
+          <div className="copyright-content">
+            <p className="copyright-text">
+              &copy; 2024 MentorIQ. All rights reserved.
+            </p>
+            <div className="footer-links-bottom">
+              <a href="/privacy">Privacy Policy</a>
+              <a href="/terms">Terms of Service</a>
+              <a href="/help">Help Center</a>
+            </div>
           </div>
         </div>
       </div>
-      {/* USERS */}
-      <div
-        className="w-100 row border rounded mt-5 analytics p-0"
-        style={{ minHeight: "15rem" }}
-      >
-        <div className="col-sm-6 col-md-3">
-          <h4 className="heading">200+</h4>
-          <p>Courses</p>
-        </div>
-        <div className="col-sm-6 col-md-3">
-          <h4 className="heading">40+</h4>
-          <p>Lecturers</p>
-        </div>
-        <div className="col-sm-6 col-md-3">
-          <h4 className="heading">2000+</h4>
-          <p>Students</p>
-        </div>
-        <div className="col-sm-6 col-md-3">
-          <h4 className="heading">20+</h4>
-          <p>Schools</p>
-        </div>
-      </div>
-      {/* FOOTER */}
-      <Footer mt="5rem" />
     </div>
-  ) : (
-    ""
-  );
+  ) : null;
 };
+
 export default LandingPage;

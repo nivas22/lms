@@ -184,7 +184,7 @@ const Login = () => {
           </Button>
         </Link>
       </div>
-      <Footer mt="7rem" />
+      {/* <Footer mt="7rem" /> */}
     </>
   );
 };
