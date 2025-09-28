@@ -1,0 +1,77 @@
+[
+  {
+    "question": "What is a data structure?",
+    "options": [
+      "a) A programming language",
+      "b) A collection of algorithms",
+      "c) A way to store and organize data",
+      "d) A type of computer hardware"
+    ],
+    "answer": "c) A way to store and organize data"
+  },
+  {
+    "question": "What are the disadvantages of arrays?",
+    "options": [
+      "a) Index value of an array can be negative",
+      "b) Elements are sequentially accessed",
+      "c) Data structure like queue or stack cannot be implemented",
+      "d) There are chances of wastage of memory space if elements inserted in an array are lesser than the allocated size"
+    ],
+    "answer": "d) There are chances of wastage of memory space if elements inserted in an array are lesser than the allocated size"
+  },
+  {
+    "question": "Which data structure is used for implementing recursion?",
+    "options": ["a) Stack", "b) Queue", "c) List", "d) Array"],
+    "answer": "a) Stack"
+  },
+  {
+    "question": "The data structure required to check whether an expression contains a balanced parenthesis is?",
+    "options": ["a) Queue", "b) Stack", "c) Tree", "d) Array"],
+    "answer": "b) Stack"
+  },
+  {
+    "question": "Which of the following is not the application of stack?",
+    "options": [
+      "a) Data Transfer between two asynchronous process",
+      "b) Compiler Syntax Analyzer",
+      "c) Tracking of local variables at run time",
+      "d) A parentheses balancing program"
+    ],
+    "answer": "a) Data Transfer between two asynchronous process"
+  },
+  {
+    "question": "What is the advantage of a hash table as a data structure?",
+    "options": [
+      "a) easy to implement",
+      "b) faster access of data",
+      "c) exhibit good locality of reference",
+      "d) very efficient for less number of entries"
+    ],
+    "answer": "b) faster access of data"
+  },
+  {
+    "question": "Which type of data structure is a ternary heap?",
+    "options": ["a) Hash", "b) Array", "c) Priority Stack", "d) Priority Queue"],
+    "answer": "d) Priority Queue"
+  },
+  {
+    "question": "What is a dequeue?",
+    "options": [
+      "a) A queue implemented with both singly and doubly linked lists",
+      "b) A queue with insert/delete defined for front side of the queue",
+      "c) A queue with insert/delete defined for both front and rear ends of the queue",
+      "d) A queue implemented with a doubly linked list"
+    ],
+    "answer": "c) A queue with insert/delete defined for both front and rear ends of the queue"
+  },
+  {
+    "question": "A data structure in which elements can be inserted or deleted at/from both ends but not in the middle is?",
+    "options": ["a) Priority queue", "b) Dequeue", "c) Circular queue", "d) Queue"],
+    "answer": "b) Dequeue"
+  },
+  {
+    "question": "What is the output of the following Java code?\n\npublic class array\n{\n  public static void main(String args[])\n  {\n    int []arr = {1,2,3,4,5};\n    System.out.println(arr[2]);\n    System.out.println(arr[4]);\n  }\n}",
+    "options": ["a) 4 and 2", "b) 2 and 4", "c) 5 and 3", "d) 3 and 5"],
+    "answer": "d) 3 and 5"
+  }
+]

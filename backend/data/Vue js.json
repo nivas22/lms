@@ -1,0 +1,67 @@
+[
+  {
+    "question": "What directive is used to bind data to an element’s attribute in Vue.js?",
+    "options": ["a) v-if", "b) v-bind", "c) v-for", "d) v-model"],
+    "answer": "b) v-bind"
+  },
+  {
+    "question": "How do you pass data from a parent component to a child component?",
+    "options": ["a) Using events", "b) Using props", "c) Using computed properties", "d) Using methods"],
+    "answer": "b) Using props"
+  },
+  {
+    "question": "What is the directive used for two-way data binding in Vue?",
+    "options": ["a) v-text", "b) v-bind", "c) v-model", "d) v-show"],
+    "answer": "c) v-model"
+  },
+  {
+    "question": "What is the default file extension for Vue single-file components?",
+    "options": ["a) .vue", "b) .js", "c) .jsx", "d) .html"],
+    "answer": "a) .vue"
+  },
+  {
+    "question": "Which Vue feature allows you to write reusable logic across components?",
+    "options": ["a) Filters", "b) Mixins", "c) Slots", "d) Directives"],
+    "answer": "b) Mixins"
+  },
+  {
+    "question": "What is the purpose of the key attribute in Vue lists rendered by v-for?",
+    "options": [
+      "a) To bind data to the element",
+      "b) To improve rendering performance and help Vue track elements",
+      "c) To conditionally render elements",
+      "d) To bind styles"
+    ],
+    "answer": "b) To improve rendering performance and help Vue track elements"
+  },
+  {
+    "question": "In Vue 3 Composition API, which function is used to create a reactive reference to a primitive value?",
+    "options": ["a) reactive()", "b) ref()", "c) computed()", "d) watch()"],
+    "answer": "b) ref()"
+  },
+  {
+    "question": "In Vue Router, which mode uses the HTML5 History API to remove the hash from URLs?",
+    "options": ["a) hash mode", "b) history mode", "c) abstract mode", "d) native mode"],
+    "answer": "b) history mode"
+  },
+  {
+    "question": "How do you globally register a component in Vue 3?",
+    "options": [
+      "a) Use app.component('ComponentName', ComponentObject) on your Vue app instance",
+      "b) Use Vue.component()",
+      "c) Import the component inside every file where it’s used",
+      "d) Add it to the router"
+    ],
+    "answer": "a) Use app.component('ComponentName', ComponentObject) on your Vue app instance"
+  },
+  {
+    "question": "What is the purpose of the provide and inject API in Vue?",
+    "options": [
+      "a) To pass data from parent to child only via props",
+      "b) To allow deeply nested components to share data without prop drilling",
+      "c) To bind event listeners",
+      "d) To define lifecycle hooks"
+    ],
+    "answer": "b) To allow deeply nested components to share data without prop drilling"
+  }
+]

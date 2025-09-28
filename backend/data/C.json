@@ -1,0 +1,102 @@
+[
+    {
+        "question": "Who is the father of C language?",
+        "options": [
+            "a) Steve Jobs",
+            "b) James Gosling",
+            "c) Dennis Ritchie",
+            "d) Rasmus Lerdorf"
+        ],
+        "answer": "c) Dennis Ritchie"
+    },
+    {
+        "question": "Which of the following is not a valid C variable name?",
+        "options": [
+            "a) int number;",
+            "b) float rate;",
+            "c) int variable_count;",
+            "d) int $main;"
+        ],
+        "answer": "d) int $main;"
+    },
+    {
+        "question": "All keywords in C are in ____",
+        "options": [
+            "a) LowerCase letters",
+            "b) UpperCase letters",
+            "c) CamelCase letters",
+            "d) None of the mentioned"
+        ],
+        "answer": "a) LowerCase letters"
+    },
+    {
+        "question": "Which of the following is true for variable names in C?",
+        "options": [
+            "a) They can contain alphanumeric characters as well as special characters",
+            "b) It is not an error to declare a variable to be one of the keywords(like goto, static)",
+            "c) Variable names cannot start with a digit",
+            "d) Variable can be of any length"
+        ],
+        "answer": "c) Variable names cannot start with a digit"
+    },
+    {
+        "question": "Which is valid C expression?",
+        "options": [
+            "a) int my_num = 100,000;",
+            "b) int my_num = 100000;",
+            "c) int my num = 1000;",
+            "d) int $my_num=1000;"
+        ],
+        "answer": "b) int my_num = 100000;"
+    },
+    {
+        "question": "Which of the following is not possible statically in C language?",
+        "options": [
+            "a) Jagged Array",
+            "b) Rectangular Array",
+            "c) Cuboidal Array",
+            "d) Multidimensional Array"
+        ],
+        "answer": "a) Jagged Array"
+    },
+    {
+        "question": "Which of the following return-type cannot be used for a function in C?",
+        "options": [
+            "a) char *",
+            "b) struct",
+            "c) void",
+            "d) none of the mentioned"
+        ],
+        "answer": "d) none of the mentioned"
+    },
+    {
+        "question": "The standard header ___ is used for variable list arguments (…) in C.",
+        "options": [
+            "a) <stdio.h>",
+            "b) <stdlib.h>",
+            "c) <math.h>",
+            "d) <stdarg.h>"
+        ],
+        "answer": "d) <stdarg.h>"
+    },
+    {
+        "question": "When a C program is started, O.S environment is responsible for opening file and providing pointer for that file?",
+        "options": [
+            "a) Standard input",
+            "b) Standard output",
+            "c) Standard error",
+            "d) All of the mentioned"
+        ],
+        "answer": "d) All of the mentioned"
+    },
+    {
+        "question": "In C language, FILE is of which data type?",
+        "options": [
+            "a) int",
+            "b) char *",
+            "c) struct",
+            "d) None of the mentioned"
+        ],
+        "answer": "c) struct"
+    }
+]

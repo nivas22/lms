@@ -3,6 +3,16 @@ import AntdTable from "../../components/AntdTable";
 import { useState } from "react";
 
 const Feedbacks = () => {
+  const allCourses = useSelector((state) => state.myReducer.courses);
+  const allLessons = useSelector((state) => state.myReducer.lessons);
+
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+  const myCourses = allCourses.filter((course) =>
+    course.teachers.includes(currentUser._id)
+  );
+
+
   const columns = [
     {
       title: "Course Name",
@@ -33,8 +43,12 @@ const Feedbacks = () => {
   const feedbacks = useSelector((state) => state.myReducer.feedbacks);
   console.log("feedbacks", feedbacks);
 
+  const myFeedbacks = feedbacks.filter((feedback) =>
+    myCourses.some((course) => course._id === feedback.courseId)
+  );
+
   const [filteredStudents, setFilteredStudents] = useState(students);
-  const [filteredFeedbacks, setFilteredFeedbacks] = useState(feedbacks);
+  const [filteredFeedbacks, setFilteredFeedbacks] = useState(myFeedbacks);
 
   return (
     <div className="w-100">

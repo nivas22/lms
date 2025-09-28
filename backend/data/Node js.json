@@ -1,0 +1,52 @@
+[
+  {
+    "question": "What is Node.js primarily used for?",
+    "options": ["A) Designing websites", "B) Server-side JavaScript execution", "C) Database management", "D) Image editing"],
+    "answer": "B) Server-side JavaScript execution"
+  },
+  {
+    "question": "What does npm stand for?",
+    "options": ["A) Node.js Package Manager", "B) Node Programming Model", "C) New Project Manager", "D) Node.js Process Manager"],
+    "answer": "A) Node.js Package Manager"
+  },
+  {
+    "question": "Which of the following is NOT a feature of Node.js?",
+    "options": ["A) Single-threaded", "B) Event-driven", "C) Blocking I/O model", "D) Cross-platform"],
+    "answer": "C) Blocking I/O model"
+  },
+  {
+    "question": "Which method is used to read files asynchronously in Node.js?",
+    "options": ["A) fs.readFile()", "B) fs.read()", "C) fs.readSync()", "D) fs.openFile()"],
+    "answer": "A) fs.readFile()"
+  },
+  {
+    "question": "What does the process object in Node.js represent?",
+    "options": ["A) The HTTP request lifecycle", "B) The current Node.js process", "C) The database connection", "D) The event loop"],
+    "answer": "B) The current Node.js process"
+  },
+  {
+    "question": "In Node.js, which of these is NOT a core module?",
+    "options": ["A) cluster", "B) fs", "C) express", "D) os"],
+    "answer": "C) express"
+  },
+  {
+    "question": "In Node.js streams, which stream type only supports writing data?",
+    "options": ["A) Readable", "B) Writable", "C) Duplex", "D) Transform"],
+    "answer": "B) Writable"
+  },
+  {
+    "question": "Which method in Node.js is used to schedule a callback to execute after I/O events’ callbacks?",
+    "options": ["A) process.nextTick()", "B) setTimeout()", "C) setImmediate()", "D) queueMicrotask()"],
+    "answer": "C) setImmediate()"
+  },
+  {
+    "question": "What is the default buffer size for streams in Node.js?",
+    "options": ["A) 16 KB", "B) 32 KB", "C) 64 KB", "D) 128 KB"],
+    "answer": "A) 16 KB"
+  },
+  {
+    "question": "Which of these is NOT a valid way to create a Buffer in Node.js (modern versions)?",
+    "options": ["A) Buffer.alloc(size)", "B) Buffer.from(array)", "C) Buffer(size)", "D) Buffer.from(string)"],
+    "answer": "C) Buffer(size)"
+  }
+]

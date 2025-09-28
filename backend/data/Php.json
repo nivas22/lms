@@ -1,0 +1,87 @@
+[
+  {
+    "question": "What is PHP?",
+    "options": [
+      "a) PHP is an open-source programming language",
+      "b) PHP is used to develop dynamic and interactive websites",
+      "c) PHP is a server-side scripting language",
+      "d) All of the mentioned"
+    ],
+    "answer": "d) All of the mentioned"
+  },
+  {
+    "question": "Who is the father of PHP?",
+    "options": [
+      "a) Drek Kolkevi",
+      "b) Rasmus Lerdorf",
+      "c) Willam Makepiece",
+      "d) List Barely"
+    ],
+    "answer": "b) Rasmus Lerdorf"
+  },
+  {
+    "question": "What does PHP stand for?",
+    "options": [
+      "a) PHP stands for Preprocessor Home Page",
+      "b) PHP stands for Pretext Hypertext Processor",
+      "c) PHP stands for Hypertext Preprocessor",
+      "d) PHP stands for Personal Hyper Processor"
+    ],
+    "answer": "c) PHP stands for Hypertext Preprocessor"
+  },
+  {
+    "question": "Which of the following is the correct syntax to write a PHP code?",
+    "options": ["a) <?php?>", "b) < php >", "c) < ? php ?>", "d) <? ?>"],
+    "answer": "d) <? ?>"
+  },
+  {
+    "question": "Which of the following is the correct way to add a comment in PHP code?",
+    "options": ["a) #", "b) //", "c) /* */", "d) All of the mentioned"],
+    "answer": "d) All of the mentioned"
+  },
+  {
+    "question": "What does PDO stand for?",
+    "options": [
+      "a) PHP Database Orientation",
+      "b) PHP Data Orientation",
+      "c) PHP Data Object",
+      "d) PHP Database Object"
+    ],
+    "answer": "c) PHP Data Object"
+  },
+  {
+    "question": "What will be the output of the following PHP program?\n\n<?php \n$a = 100; \nif ($a > 10) \nprintf(\"PHP Quiz\"); \nelse if ($a > 20) \nprintf(\"PHP MCQ\"); \nelse if($a > 30) \nprintf(\"PHP Program\"); \n?>",
+    "options": [
+      "a) PHP QuizPHP MCQ PHP Program",
+      "b) PHP Quiz",
+      "c) No output",
+      "d) PHP MCQ"
+    ],
+    "answer": "b) PHP Quiz"
+  },
+  {
+    "question": "Which of the looping statements is/are supported by PHP?\n\ni) for loop \nii) while loop \niii) do-while loop \niv) foreach",
+    "options": [
+      "a) Only iv)",
+      "b) i) and ii)",
+      "c) i), ii) and iii)",
+      "d) i), ii), iii) and iv)"
+    ],
+    "answer": "d) i), ii), iii) and iv)"
+  },
+  {
+    "question": "Which PHP statement will give output as $x on the screen?",
+    "options": [
+      "a) echo “\\$x”;",
+      "b) echo “$$x”;",
+      "c) echo “/$x”;",
+      "d) echo “$x;”;"
+    ],
+    "answer": "a) echo “\\$x”;"
+  },
+  {
+    "question": "Which version of PHP introduced the advanced concepts of OOP?",
+    "options": ["a) PHP 6", "b) PHP 4", "c) PHP 5", "d) PHP 5.3"],
+    "answer": "c) PHP 5"
+  }
+]
