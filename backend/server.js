@@ -717,7 +717,6 @@ app.post("/upload-student-activity-file/:id", async (req, response) => {
 });
 
 // GET users who completed courses created by a given teacher
-// GET users who completed courses created by a given teacher
 app.get("/get-completed-course-users/:teacherId", async (req, res) => {
   try {
     const { teacherId } = req.params;
@@ -754,6 +753,42 @@ app.get("/get-completed-course-users/:teacherId", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
+
+app.get("/get-completed-course-users", async (req, res) => {
+  try {
+    // 1️⃣ Get all courses (you can select only `_id` if details not needed here)
+    const allCourses = await Course.find().select("_id");
+
+    if (!allCourses.length) {
+      return res.json({ result: [] });
+    }
+
+    const courseIds = allCourses.map(c => c._id);
+
+    // 2️⃣ Find registrations with status 'finished' for those courses
+    const completedRegs = await CourseRegistration.find({
+      course: { $in: courseIds },
+      status: { $in: ["FEEDBACK_DONE", "issued"] }
+    })
+      .populate("user", "name email role") // only needed fields
+      .populate("course"); // full course details
+
+    // 3️⃣ Prepare result
+    const completedUsers = completedRegs.map(reg => ({
+      _id: reg._id,
+      status: reg.status,
+      course: reg.course,          // full course object
+      user: reg.user,              // user object with name/email/role
+      completedAt: reg.updatedAt,  // date they completed
+    }));
+
+    res.json({ result: completedUsers });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 
 app.patch("/issue-certificate/:registrationId", async (req, res) => {
   try {

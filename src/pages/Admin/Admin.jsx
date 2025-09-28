@@ -17,6 +17,7 @@ import Departments from "./Departments";
 import Courses from "./Courses";
 import Teachers from "./Teachers";
 import Students from "./Students";
+import CompletedCourseAdmin from "./CompletedCourseUsers";
 import Me from "../common/Me";
 import Feedbacks from "./Feedback";
 const { Header, Sider, Content } = Layout;
@@ -41,18 +42,21 @@ const Admin = () => {
       content = <Courses />;
       break;
     case "4":
-      content = <Teachers />;
+      content = <CompletedCourseAdmin />;
       break;
     case "5":
-      content = <Students />;
+      content = <Teachers />;
       break;
     case "6":
-      content = <Feedbacks />;
+      content = <Students />;
       break;
     case "7":
-      content = <Account />;
+      content = <Feedbacks />;
       break;
     case "8":
+      content = <Account />;
+      break;
+    case "9":
       content = <Me />;
       break;
 
@@ -100,27 +104,32 @@ const Admin = () => {
             },
             {
               key: "4",
+              icon: <BookFilled />,
+              label: "Completed Courses",
+            },
+            {
+              key: "5",
               icon: <ReadOutlined />,
               label: "Teachers",
             },
             {
-              key: "5",
+              key: "6",
               icon: <MdPeople />,
               label: "Students",
             },
 
             {
-              key: "6",
+              key: "7",
               icon: <MdFeedback />,
               label: "Feedbacks",
             },
             {
-              key: "7",
+              key: "8",
               icon: <SettingFilled />,
               label: "Manage Accounts",
             },
             {
-              key: "8",
+              key: "9",
               icon: <UserOutlined />,
               label: "Me",
             },
