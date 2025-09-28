@@ -54,7 +54,7 @@ const LandingPage = () => {
     },
     {
       id: 2,
-      title: "Python for Engineers",
+      title: "Python",
       code: "CS201",
       duration: "14 weeks",
       level: "Intermediate",
@@ -81,7 +81,7 @@ const LandingPage = () => {
     },
     {
       id: 5,
-      title: "PHP & MySQL for Web Apps",
+      title: "PHP for Web Apps",
       code: "CS501",
       duration: "15 weeks",
       level: "Advanced",
@@ -117,21 +117,12 @@ const LandingPage = () => {
     },
     {
       id: 9,
-      title: "Networking Essentials",
+      title: "C++",
       code: "CE502",
       duration: "18 weeks",
       level: "Advanced",
       instructor: "Dr. Andrew Taylor",
       category: "Civil Engineering"
-    },
-    {
-      id: 10,
-      title: "Database Management Systems",
-      code: "CE602",
-      duration: "14 weeks",
-      level: "Advanced",
-      instructor: "Prof. Jennifer Lee",
-      category: "Chemical Engineering"
     }
   ];
 
@@ -310,7 +301,7 @@ const LandingPage = () => {
         <div className="container">
           <div className="row">
             <div className="col-12 text-center mb-5">
-              <h2 className="section-title">Engineering Courses</h2>
+              <h2 className="section-title">Courses</h2>
               <p className="section-subtitle">Explore our comprehensive engineering curriculum</p>
             </div>
           </div>
@@ -333,7 +324,7 @@ const LandingPage = () => {
                     <Tag color={getLevelColor(course.level)} className="course-level-tag">
                       {course.level}
                     </Tag>
-                    <span className="course-duration">{course.duration}</span>
+                    {/* <span className="course-duration">{course.duration}</span> */}
                   </div>
                   <h4 className="course-title">{course.title}</h4>
                   <p className="course-code">{course.code}</p>
