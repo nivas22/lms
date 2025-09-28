@@ -344,7 +344,7 @@ const Signup = () => {
           </Button>
         </Link>
       </div>
-      <Footer mt="6rem" />
+      {/* <Footer mt="6rem" /> */}
     </>
   );
 };

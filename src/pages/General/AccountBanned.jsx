@@ -18,7 +18,7 @@ export default function AccountBanned() {
           }
         />
       </div>
-      <Footer mt="15rem" />
+      {/* <Footer mt="15rem" /> */}
     </>
   );
 }

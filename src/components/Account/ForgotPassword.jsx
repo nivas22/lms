@@ -215,7 +215,7 @@ const ForgotPassword = () => {
           </div>
         )}
       </div>
-      <Footer mt="23rem" />
+      {/* <Footer mt="23rem" /> */}
     </>
   );
 };

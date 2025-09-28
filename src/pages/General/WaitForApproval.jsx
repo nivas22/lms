@@ -19,7 +19,7 @@ export default function WaitForApproval() {
           }
         />
       </div>
-      <Footer mt="15rem" />
+      {/* <Footer mt="15rem" /> */}
     </>
   );
 }

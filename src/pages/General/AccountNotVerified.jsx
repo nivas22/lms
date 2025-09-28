@@ -18,7 +18,7 @@ export default function AccountNotVerifiedPage() {
           }
         />
       </div>
-      <Footer mt="15rem" />
+      {/* <Footer mt="15rem" /> */}
     </>
   );
 }
