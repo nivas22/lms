@@ -202,14 +202,14 @@ const MyCourses = () => {
     {
       title: "Subscribed in",
       render(item) {
-        const courseReg = courseRegs.find((cr) => cr.course === item._id);
+        const courseReg = myCourseRegs.find((cr) => cr.course === item._id);
         return courseReg ? courseReg.createdAt.split("T")[0] : "";
       },
     },
     {
       title: "My Status",
       render(item) {
-        const courseReg = courseRegs.find((cr) => cr.course === item._id);
+        const courseReg = myCourseRegs.find((cr) => cr.course === item._id);
         if (!courseReg || !courseReg.createdAt || !courseReg.updatedAt) return "";
 
         const createdAt = new Date(courseReg.createdAt);
@@ -232,7 +232,7 @@ const MyCourses = () => {
     {
       title: "Actions",
       render(item) {
-        const courseReg = courseRegs.find((cr) => cr.course === item._id);
+        const courseReg = myCourseRegs.find((cr) => cr.course === item._id);
 
         if (!courseReg) return null;
 
