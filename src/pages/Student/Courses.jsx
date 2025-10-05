@@ -26,6 +26,7 @@ const Courses = () => {
     {
       title: "My Status",
       render(item) {
+        debugger;
         const isRegistered =
           courseRegs.filter(
             (cr) => cr.user == currentUser._id && cr.course == item._id
@@ -91,10 +92,13 @@ const Courses = () => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
   const courseRegs = useSelector((state) => state.myReducer.courseRegs);
+  console.log("course regs-----", courseRegs);
 
   const myCourses = allCourses.filter(
     (course) => course.department == currentUser.department
   );
+
+  console.log("myCourses regs-----", myCourses);
 
   const allLessons = useSelector((state) => state.myReducer.lessons);
   const myLessons = allLessons.filter((lesson) => {
