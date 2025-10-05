@@ -46,10 +46,10 @@ const Signup = () => {
   ];
 
   const grades = [
-    { name: "1", value: "one" },
-    { name: "2", value: "two" },
-    { name: "3", value: "three" },
-    { name: "4", value: "four" },
+    { name: "1", value: "1" },
+    { name: "2", value: "2" },
+    { name: "3", value: "3" },
+    { name: "4", value: "4" },
   ];
 
   const getDepartments = () => {
