@@ -5,9 +5,8 @@ const Course = require("./models/course");
 const Department = require("./models/department");
 
 const defaultDepartments = [
-  { title: "Engineering" },
-  { title: "Human Resources" },
-  { title: "Marketing" },
+  { title: "BCA" },
+  { title: "Computer Science" },
 ];
 
 async function loadDepartments() {
